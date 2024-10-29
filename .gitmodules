@@ -1,0 +1,3 @@
+[submodule "testing-repo-aads"]
+	url = https://gitlab.com/Oadalsaesa/testing-repo-aads
+	path = testing_repo
