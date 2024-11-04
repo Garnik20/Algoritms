@@ -4,7 +4,7 @@
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
 
-bool is_can_for_d(std::vector<int> &arr, int distance, int count, int count_ell) {
+bool IsCanForD(std::vector<int> &arr, int distance, int count, int count_ell) {
   int exe_count = 0; // Счетчик подмножеств с суммой >= distance
   int sum = 0; // Переменная для суммы расстояний между точками
 
@@ -55,7 +55,7 @@ int main() {
 
     // Проверяем, можно ли выбрать count_ell - 1 отрезков с минимальным
     // расстоянием mid
-    if (is_can_for_d(arr, mid, count, count_ell - 1)) {
+    if (IsCanForD(arr, mid, count, count_ell - 1)) {
       mid_down = mid; // Если можно, поднимаем нижнюю границу
     } else {
       mid_up = mid; // Если нельзя, опускаем верхнюю границу
@@ -63,8 +63,8 @@ int main() {
   }
 
   // Проверяем крайние значения mid_down и mid_up для получения точного ответа
-  if (is_can_for_d(arr, mid_down, count, count_ell - 1) &&
-      is_can_for_d(arr, mid_up, count, count_ell - 1)) {
+  if (IsCanForD(arr, mid_down, count, count_ell - 1) &&
+      IsCanForD(arr, mid_up, count, count_ell - 1)) {
     std::cout << mid_up << '\n';
   } else {
     std::cout << mid_down << '\n';
