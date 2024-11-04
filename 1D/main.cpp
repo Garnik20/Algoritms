@@ -5,7 +5,7 @@
 // между выбранными точками так, чтобы выбрать хотя бы k точек
 
 bool is_can_for_d(std::vector<int> &arr, int distance, int count, int count_ell) {
-  int count = 0; // Счетчик подмножеств с суммой >= distance
+  int exe_count = 0; // Счетчик подмножеств с суммой >= distance
   int sum = 0; // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
@@ -16,13 +16,13 @@ bool is_can_for_d(std::vector<int> &arr, int distance, int count, int count_ell)
     // увеличиваем счетчик
     if (sum >= distance) {
       sum = 0;
-      count++;
+      exe_count++;
     }
   }
 
   // Возвращаем true, если удалось найти не менее count_ell подходящих
   // интервалов, иначе false
-  return count >= count_ell;
+  return exe_count >= count_ell;
 }
 
 int main() {
