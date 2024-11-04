@@ -3,10 +3,10 @@
 
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
-bool is_can_for_d(std::vector<int> &arr, int distance, int count,
-                  int count_ell) {
+
+bool is_can_for_d(std::vector<int> &arr, int distance, int count, int count_ell) {
   int count = 0; // Счетчик подмножеств с суммой >= distance
-  int sum = 0; // Переменная для накопления суммы расстояний между точками
+  int sum = 0; // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
   for (size_t i = 0; i < count - 1; i++) {
@@ -27,7 +27,8 @@ bool is_can_for_d(std::vector<int> &arr, int distance, int count,
 
 int main() {
   // Вводим количество точек count и количество отрезков count_ell
-  int count, count_ell;
+  int count_ell;
+  int count;
   std::cin >> count >> count_ell;
 
   // Вводим координаты точек
