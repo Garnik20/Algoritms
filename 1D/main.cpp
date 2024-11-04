@@ -8,7 +8,7 @@ bool IsCanForD(std::vector<int>& arr, int distance, int count, int count_ell) {
   int sum = 0;  // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
-  for (size_t i = 0; i < count - 1; i++) {
+  for (int i = 0; i < count - 1; i++) {
     sum += arr[i];
 
     // Если сумма расстояний между точками >= distance, сбрасываем сумму и
@@ -32,7 +32,7 @@ int main() {
 
   // Вводим координаты точек
   std::vector<int> arr(count);
-  for (size_t i = 0; i < count; i++) {
+  for (int i = 0; i < count; i++) {
     std::cin >> arr[i];
   }
 
@@ -43,7 +43,7 @@ int main() {
   int mid_down = 1;  // Нижняя граница — минимальное расстояние
 
   // Преобразуем массив arr в массив расстояний между соседними точками
-  for (size_t i = 0; i < count - 1; i++) {
+  for (int i = 0; i < count - 1; i++) {
     arr[i] = arr[i + 1] - arr[i];
   }
 
