@@ -3,7 +3,7 @@
 
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
-bool IsCanForD(std::vector<int> &arr, int distance, int count, int count_ell) {
+bool IsCanForD(std::vector<int>& arr, int distance, int count, int count_ell) {
   int exe_count = 0;  // Счетчик подмножеств с суммой >= distance
   int sum = 0;  // Переменная для суммы расстояний между точками
 
