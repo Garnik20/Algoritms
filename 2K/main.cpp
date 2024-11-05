@@ -31,7 +31,7 @@ class Queue {
   void Enqueue(int num) {
     stack_1.push_back(num);  // Добавляем элемент в stack_1
     if (stack_1_min.empty()) {
-      stack_1_min.push_back(num);  // Если stack_1_min пуст, добавляем элемент как минимум
+      stack_1_min.push_back(num);  // Если stack_1_min пуст
     } else {
       stack_1_min.push_back(std::min(stack_1_min.back(), num));
     }
