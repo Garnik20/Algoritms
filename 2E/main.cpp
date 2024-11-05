@@ -14,7 +14,8 @@ int Partittion(std::vector<int> &arr, int left, int right, int ind) {
       ind_pivot++;
     }
   }
-  std::swap(arr[ind_pivot], arr[right]); // Помещаем опорный элемент на своё место
+  std::swap(arr[ind_pivot],
+            arr[right]);  // Помещаем опорный элемент на своё место
   return ind_pivot;
 }
 
