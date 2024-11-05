@@ -6,10 +6,11 @@ void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
   std::vector<long long> output(count);
   int count_byte[256] = {0};
   const int Hex = 0b11111111;
+  const int kByt = 8;
 
   // Считаем частоты каждого значения байта на позиции byte_ind для всех чисел
   for (int i = 0; i < count; ++i) {
-    unsigned char byte = (arr[i] >> (byte_ind * 8)) & Hex;
+    unsigned char byte = (arr[i] >> (byte_ind * kByt)) & Hex;
     count_byte[byte]++;  // Увеличиваем счетчик для данного байта
   }
 
@@ -20,7 +21,7 @@ void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
 
   // Заполняем массив output, размещая элементы в порядке, определенном count
   for (int i = count - 1; i >= 0; --i) {
-    unsigned char byte = (arr[i] >> (byte_ind * 8)) & 0b11111111;
+    unsigned char byte = (arr[i] >> (byte_ind * kByt)) & Hex;
     output[--count_byte[byte]] = arr[i];
   }
 
