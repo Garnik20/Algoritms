@@ -42,8 +42,8 @@ void SortLSD(std::vector<long long>& arr, int count) {
 
 int main() {
   int count;
-  std::cin >> count; // Считываем количество элементов
-  std::vector<long long> arr; // Вектор для хранения элементов
+  std::cin >> count;  // Считываем количество элементов
+  std::vector<long long> arr;  // Вектор для хранения элементов
 
   // Считываем элементы и добавляем в массив
   long long num;
