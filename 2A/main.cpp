@@ -40,6 +40,7 @@ private:
   }
 
 public:
+
   std::vector<long long> heap;
   void Insert(long long value) {
     heap.push_back(value);  // Добавляем элемент в конец кучи.
