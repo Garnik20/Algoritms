@@ -9,15 +9,15 @@ private:
   std::vector<long long> heap;
 
   // Функция sift_up поднимает элемент вверх по куче
-  void sift_up(size_t index) {
+  void SiftUp(size_t index) {
     while (index > 0 && heap[index] < heap[(index - 1) / 2]) {
       std::swap(heap[index], heap[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
   }
 
-  // Функция min_of_sons находит минимального из двух дочерних узлов
-  size_t min_of_sons(size_t index) {
+  // Функция MinOfSons находит минимального из двух дочерних узлов
+  size_t MinOfSons(size_t index) {
     size_t left_son = index * 2 + 1;  // Индекс левого сына.
     size_t right_son = index * 2 + 2; // Индекс правого сына.
     size_t smallest = index;
@@ -31,20 +31,20 @@ private:
     return smallest;
   }
 
-  // Функция sift_down опускает элемент вниз по куче
-  void sift_down(size_t i) {
-    size_t smallest = min_of_sons(i);
-    while (i != smallest) {
-      std::swap(heap[i], heap[smallest]);
-      i = smallest;
-      smallest = min_of_sons(i);
+  // Функция SiftDown опускает элемент вниз по куче
+  void SiftDown(size_t index) {
+    size_t smallest = MinOfSons(index);
+    while (index != smallest) {
+      std::swap(heap[index], heap[smallest]);
+      index = smallest;
+      smallest = MinOfSons(index);
     }
   }
 
 public:
   void Insert(long long value) {
     heap.push_back(value); // Добавляем элемент в конец кучи.
-    sift_up(heap.size() - 1); // Восстанавливаем свойства кучи.
+    SiftUp(heap.size() - 1); // Восстанавливаем свойства кучи.
   }
 
   // Метод getMin возвращает минимальный элемент из кучи.
@@ -55,7 +55,7 @@ public:
     std::swap(heap[0], heap[heap.size() - 1]);
     heap.pop_back();
     if (!heap.empty()) {
-      sift_down(0);
+      SiftDown(0);
     }
   }
 
@@ -68,7 +68,7 @@ public:
     }
     // Уменьшаем значение и поднимаем его, чтобы сохранить структуру кучи.
     heap[count] -= det;
-    sift_up(count);
+    SiftUp(count);
   }
 };
 
