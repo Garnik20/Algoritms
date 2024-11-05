@@ -4,9 +4,9 @@
 // Функция для сортировки по конкретному байту
 void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
   std::vector<long long> output(count);
-  int count_byte[256] = {0};
   const int kHex = 0b11111111;
   const int kByt = 8;
+  int count_byte[kHex] = {0};
 
   // Считаем частоты каждого значения байта на позиции byte_ind для всех чисел
   for (int i = 0; i < count; ++i) {
