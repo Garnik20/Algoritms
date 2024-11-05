@@ -5,16 +5,16 @@
 void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
   std::vector<long long> output(count);
   int count_byte[256] = {0};
-  const int hex = 0b11111111;
+  const int Hex = 0b11111111;
 
   // Считаем частоты каждого значения байта на позиции byte_ind для всех чисел
   for (int i = 0; i < count; ++i) {
-    unsigned char byte = (arr[i] >> (byte_ind * 8)) & hex;
+    unsigned char byte = (arr[i] >> (byte_ind * 8)) & Hex;
     count_byte[byte]++;  // Увеличиваем счетчик для данного байта
   }
 
   // Накапливаем частоты для определения позиций элементов
-  for (int i = 1; i < hex; ++i) {
+  for (int i = 1; i < Hex; ++i) {
     count_byte[i] += count_byte[i - 1];
   }
 
@@ -32,9 +32,9 @@ void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
 
 // LSD сортировка для длинных чисел (long long)
 void SortLSD(std::vector<long long>& arr, int count) {
-  const int byt = 8;
+  const int kByt = 8;
   // Последовательно сортируем по каждому байту (от младшего к старшему)
-  for (int byte_ind = 0; byte_ind < byt; ++byte_ind) {
+  for (int byte_ind = 0; byte_ind < kByt; ++byte_ind) {
     SortByByte(arr, byte_ind, count);  // Сортируем по конкретному байту
   }
 }
