@@ -60,15 +60,15 @@ public:
   }
 
   // Метод decreaseKey уменьшает значение элемента в куче.
-  void decreaseKey(long long value, long long r) {
+  void decreaseKey(long long value, long long det) {
     // Находим индекс элемента с указанным значением.
-    size_t i = 0;
-    while (i < heap.size() && heap[i] != value) {
-      ++i;
+    size_t count = 0;
+    while (count < heap.size() && heap[count] != value) {
+      ++count;
     }
     // Уменьшаем значение и поднимаем его, чтобы сохранить структуру кучи.
-    heap[i] -= r;
-    sift_up(i);
+    heap[count] -= det;
+    sift_up(count);
   }
 };
 
