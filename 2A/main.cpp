@@ -4,7 +4,7 @@
 #include <vector>
 
 // Класс min_heap - минимальнaq кучa
-class min_heap {
+class MinHeap {
 private:
   // Функция sift_up поднимает элемент вверх по куче
   void SiftUp(size_t index) {
@@ -72,7 +72,7 @@ public:
 };
 
 int main() {
-  min_heap heap;
+  MinHeap heap;
   size_t count;
   std::cin >> count;
   // Словарь для хранения вставленных элементов и их индексов.
