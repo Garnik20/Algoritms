@@ -42,16 +42,16 @@ private:
   }
 
 public:
-  void insert(long long value) {
+  void Insert(long long value) {
     heap.push_back(value); // Добавляем элемент в конец кучи.
     sift_up(heap.size() - 1); // Восстанавливаем свойства кучи.
   }
 
   // Метод getMin возвращает минимальный элемент из кучи.
-  long long getMin() { return heap[0]; }
+  long long GetMin() { return heap[0]; }
 
   // Метод extractMin удаляет минимальный элемент из кучи.
-  void extractMin() {
+  void ExtractMin() {
     std::swap(heap[0], heap[heap.size() - 1]);
     heap.pop_back();
     if (!heap.empty()) {
@@ -60,7 +60,7 @@ public:
   }
 
   // Метод decreaseKey уменьшает значение элемента в куче.
-  void decreaseKey(long long value, long long det) {
+  void DecreaseKey(long long value, long long det) {
     // Находим индекс элемента с указанным значением.
     size_t count = 0;
     while (count < heap.size() && heap[count] != value) {
@@ -86,17 +86,17 @@ int main() {
     if (str == "insert") {
       long long value;
       std::cin >> value;
-      heap.insert(value);
+      heap.Insert(value);
       help_arr.insert({i + 1, value});
     } else if (str == "getMin") {
-      std::cout << heap.getMin() << "\n";
+      std::cout << heap.GetMin() << "\n";
     } else if (str == "extractMin") {
-      heap.extractMin();
+      heap.ExtractMin();
     } else if (str == "decreaseKey") {
       long long det;
       size_t ind;
       std::cin >> ind >> det; // Считываем индекс и значение для уменьшения.
-      heap.decreaseKey(help_arr[ind], det); // Уменьшаем значение в куче.
+      heap.DecreaseKey(help_arr[ind], det); // Уменьшаем значение в куче.
       help_arr[ind] -= det; // Обновляем значение в словаре.
     }
   }
