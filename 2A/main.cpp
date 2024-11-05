@@ -17,7 +17,7 @@ private:
   // Функция MinOfSons находит минимального из двух дочерних узлов
   size_t MinOfSons(size_t index) {
     size_t left_son = index * 2 + 1;  // Индекс левого сына.
-    size_t right_son = index * 2 + 2; // Индекс правого сына.
+    size_t right_son = index * 2 + 2;  // Индекс правого сына.
     size_t smallest = index;
 
     if (left_son < heap.size() && heap[left_son] < heap[smallest]) {
@@ -42,8 +42,8 @@ private:
 public:
   std::vector<long long> heap;
   void Insert(long long value) {
-    heap.push_back(value); // Добавляем элемент в конец кучи.
-    SiftUp(heap.size() - 1); // Восстанавливаем свойства кучи.
+    heap.push_back(value);  // Добавляем элемент в конец кучи.
+    SiftUp(heap.size() - 1);  // Восстанавливаем свойства кучи.
   }
 
   // Метод getMin возвращает минимальный элемент из кучи.
@@ -94,9 +94,9 @@ int main() {
     } else if (str == "decreaseKey") {
       long long det;
       size_t ind;
-      std::cin >> ind >> det; // Считываем индекс и значение для уменьшения.
-      heap.DecreaseKey(help_arr[ind], det); // Уменьшаем значение в куче.
-      help_arr[ind] -= det; // Обновляем значение в словаре.
+      std::cin >> ind >> det;  // Считываем индекс и значение для уменьшения.
+      heap.DecreaseKey(help_arr[ind], det);  // Уменьшаем значение в куче.
+      help_arr[ind] -= det;  // Обновляем значение в словаре.
     }
   }
 }
