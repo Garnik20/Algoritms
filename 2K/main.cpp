@@ -33,8 +33,7 @@ class Queue {
     if (stack_1_min.empty()) {
       stack_1_min.push_back(num);  // Если stack_1_min пуст, добавляем элемент как минимум
     } else {
-      stack_1_min.push_back(
-        std::min(stack_1_min.back(), num));  // Обновляем минимум
+      stack_1_min.push_back(std::min(stack_1_min.back(), num));
     }
     std::cout << "ok\n";
   }
