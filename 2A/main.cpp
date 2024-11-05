@@ -6,8 +6,6 @@
 // Класс min_heap - минимальнaq кучa
 class min_heap {
 private:
-  std::vector<long long> heap;
-
   // Функция sift_up поднимает элемент вверх по куче
   void SiftUp(size_t index) {
     while (index > 0 && heap[index] < heap[(index - 1) / 2]) {
@@ -42,6 +40,7 @@ private:
   }
 
 public:
+  std::vector<long long> heap;
   void Insert(long long value) {
     heap.push_back(value); // Добавляем элемент в конец кучи.
     SiftUp(heap.size() - 1); // Восстанавливаем свойства кучи.
