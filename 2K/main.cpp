@@ -10,7 +10,7 @@ class Queue {
     while (!stack_1.empty()) {
       int el = stack_1.back();  // Берем верхний элемент из stack_1
       stack_2.push_back(el);  // Добавляем его в stack_2
-      stack_1.pop_back();  // Удаляем из stack_1
+      stack_1.pop_back();     // Удаляем из stack_1
       stack_1_min.pop_back();  // Удаляем элемент минимума в stack_1
 
       // Обновляем stack_2_min для корректного отслеживания минимума в stack_2
