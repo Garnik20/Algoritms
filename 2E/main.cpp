@@ -2,7 +2,7 @@
 #include <vector>
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
-int Partittion(std::vector<int> &arr, int left, int right, int ind) {
+int Partittion(std::vector<int>& arr, int left, int right, int ind) {
   int pivot = arr[ind];
   std::swap(arr[ind], arr[right]);
   int ind_pivot = left;
