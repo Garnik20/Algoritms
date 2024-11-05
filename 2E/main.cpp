@@ -19,7 +19,7 @@ int Partittion(std::vector<int> &arr, int left, int right, int ind) {
 }
 
 // Сортировка
-void QuickSort(std::vector<int> &arr, int left, int right) {
+void QuickSort(std::vector<int>& arr, int left, int right) {
   if (left < right) {
     int pivot_ind = left + std::rand() % (right - left + 1);
 
