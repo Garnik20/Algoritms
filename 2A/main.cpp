@@ -16,8 +16,8 @@ private:
 
   // Функция MinOfSons находит минимального из двух дочерних узлов
   size_t MinOfSons(size_t index) {
-    size_t left_son = index * 2 + 1;  // Индекс левого сына.
-    size_t right_son = index * 2 + 2;  // Индекс правого сына.
+    size_t left_son = index * 2 + 1;
+    size_t right_son = index * 2 + 2;
     size_t smallest = index;
 
     if (left_son < heap.size() && heap[left_son] < heap[smallest]) {
@@ -40,7 +40,7 @@ private:
   }
 
 public:
-
+  // Массив кучи
   std::vector<long long> heap;
   void Insert(long long value) {
     heap.push_back(value);  // Добавляем элемент в конец кучи.
