@@ -30,7 +30,7 @@ void SortByByte(std::vector<long long>& arr, int byte_ind, int count) {
 }
 
 // LSD сортировка для длинных чисел (long long)
-void sort_lsd(std::vector<long long>& arr, int count) {
+void SortLSD(std::vector<long long>& arr, int count) {
   // Последовательно сортируем по каждому байту (от младшего к старшему)
   for (int byte_ind = 0; byte_ind < 8; ++byte_ind) {
     SortByByte(arr, byte_ind, count);  // Сортируем по конкретному байту
@@ -50,7 +50,7 @@ int main() {
   }
 
   // Выполняем сортировку LSD
-  sort_lsd(arr, count);
+  SortLSD(arr, count);
 
   // Выводим отсортированные элементы
   for (long long num : arr) {
