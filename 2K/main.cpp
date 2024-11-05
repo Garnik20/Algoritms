@@ -5,11 +5,6 @@
 
 class Queue {
  private:
-  std::vector<int> stack_1;          // Стек для добавления новых элементов
-  std::vector<int> stack_1_min;      // Стек для отслеживания минимума в stack_1
-  std::vector<int> stack_2;          // Стек для удаления элементов из очереди
-  std::vector<int> stack_2_min;      // Стек для отслеживания минимума в stack_2
-
   // Перемещает все элементы из stack_1 в stack_2
   void Transfer() {
     while (!stack_1.empty()) {
@@ -28,6 +23,10 @@ class Queue {
   }
 
  public:
+  std::vector<int> stack_1;          // Стек для добавления новых элементов
+  std::vector<int> stack_1_min;      // Стек для отслеживания минимума в stack_1
+  std::vector<int> stack_2;          // Стек для удаления элементов из очереди
+  std::vector<int> stack_2_min;      // Стек для отслеживания минимума в stack_2
   // Добавление элемента в очередь
   void Enqueue(int num) {
     stack_1.push_back(num);                  // Добавляем элемент в stack_1
