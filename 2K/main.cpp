@@ -65,9 +65,7 @@ class Queue {
   }
 
   // Вывод размера очереди
-  void SizeSt() const { 
-    std::cout << stack_1.size() + stack_2.size() << '\n'; 
-  }
+  void SizeSt() const { std::cout << stack_1.size() + stack_2.size() << '\n'; }
 
   // Очистка очереди
   void Clear() {
