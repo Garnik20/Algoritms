@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
 class Queue {
  private:
   // Перемещает все элементы из stack_1 в stack_2
