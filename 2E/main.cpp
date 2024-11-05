@@ -5,17 +5,17 @@
 int Partittion(std::vector<int> &arr, int left, int right, int ind) {
   int pivot = arr[ind];
   std::swap(arr[ind], arr[right]);
-  int i = left;
+  int ind_pivot = left;
 
   // Перемещаем элементы меньше опорного в левую часть
   for (int j = left; j < right; ++j) {
     if (arr[j] < pivot) {
-      std::swap(arr[i], arr[j]);
-      i++;
+      std::swap(arr[ind_pivot], arr[j]);
+      ind_pivot++;
     }
   }
-  std::swap(arr[i], arr[right]); // Помещаем опорный элемент на своё место
-  return i;
+  std::swap(arr[ind_pivot], arr[right]); // Помещаем опорный элемент на своё место
+  return ind_pivot;
 }
 
 // Сортировка
