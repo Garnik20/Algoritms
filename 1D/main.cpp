@@ -7,7 +7,7 @@
 bool IsCanForD(std::vector<int32_t>& arr, int32_t distance, size_t count,
                size_t count_ell) {
   size_t exe_count = 0;  // Счетчик подмножеств с суммой >= distance
-  size_t sum = 0;  // Переменная для суммы расстояний между точками
+  uint32_t sum = 0;  // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
   for (size_t i = 0; i < count - 1; i++) {
@@ -33,7 +33,7 @@ int main() {
   std::cin >> count >> count_ell;
 
   // Вводим координаты точек
-  std::vector<int> arr(count);
+  std::vector<uint32_t> arr(count);
   for (size_t i = 0; i < count; i++) {
     std::cin >> arr[i];
   }
