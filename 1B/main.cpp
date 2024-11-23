@@ -34,7 +34,7 @@ std::vector<double> LogPref(std::vector<double> inp_arr,
 }
 
 int main() {
-  const int kDec = 10;
+  const uint8_t kDec = 10;
   // Вводим количество элементов в массиве
   size_t count;
   std::cin >> count;
