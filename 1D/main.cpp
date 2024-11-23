@@ -26,18 +26,7 @@ bool IsCanForD(std::vector<uint32_t>& arr, uint32_t distance, size_t count,
   return exe_count >= count_ell;
 }
 
-int main() {
-  // Вводим количество точек count и количество отрезков count_ell
-  size_t count_ell;
-  size_t count;
-  std::cin >> count >> count_ell;
-
-  // Вводим координаты точек
-  std::vector<uint32_t> arr(count);
-  for (size_t i = 0; i < count; i++) {
-    std::cin >> arr[i];
-  }
-
+uint32_t Search(std::vector<uint32_t> &arr, size_t count, size_t count_ell) {
   // Границы бинарного поиска
   uint32_t mid_up =
       (arr[count - 1] - arr[0]) /
@@ -64,12 +53,35 @@ int main() {
     mid_up = mid;  // Если нельзя, опускаем верхнюю границу
   }
 
+  uint32_t result;
   // Проверяем крайние значения mid_down и mid_up для получения точного ответа
   if (IsCanForD(arr, mid_down, count, count_ell - 1) &&
       IsCanForD(arr, mid_up, count, count_ell - 1)) {
-    std::cout << mid_up << '\n';
+    result == mid_up;
   } else {
-    std::cout << mid_down << '\n';
+    result == mid_down;
   }
+
+  return;
+}
+
+int main() {
+  // Вводим количество точек count и количество отрезков count_ell
+  size_t count_ell;
+  size_t count;
+  std::cin >> count >> count_ell;
+
+  // Вводим координаты точек
+  std::vector<uint32_t> arr(count);
+  for (size_t i = 0; i < count; i++) {
+    std::cin >> arr[i];
+  }
+
+  uint32_t reslut;
+  reslut = Search(arr, count, count_ell);
+
+  // Вывод
+  std::cout << reslut << '\n';
+
   return 0;
 }
