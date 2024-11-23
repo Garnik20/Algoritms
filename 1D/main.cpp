@@ -1,10 +1,11 @@
+#include <cstdint>
 #include <iostream>
 #include <vector>
-#include <cstdint>
 
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
-bool IsCanForD(std::vector<int32_t>& arr, int32_t distance, size_t count, size_t count_ell) {
+bool IsCanForD(std::vector<int32_t>& arr, int32_t distance, size_t count,
+               size_t count_ell) {
   size_t exe_count = 0;  // Счетчик подмножеств с суммой >= distance
   size_t sum = 0;  // Переменная для суммы расстояний между точками
 
@@ -38,9 +39,10 @@ int main() {
   }
 
   // Границы бинарного поиска
-  uint32_t mid_up = (arr[count - 1] - arr[0]) /
-               (count_ell -
-                1);  // Верхняя граница — максимальное расстояние между точками
+  uint32_t mid_up =
+      (arr[count - 1] - arr[0]) /
+      (count_ell -
+       1);  // Верхняя граница — максимальное расстояние между точками
   uint32_t mid_down = 1;  // Нижняя граница — минимальное расстояние
 
   // Преобразуем массив arr в массив расстояний между соседними точками
