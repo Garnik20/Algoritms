@@ -26,7 +26,7 @@ bool IsCanForD(std::vector<uint32_t>& arr, uint32_t distance, size_t count,
   return exe_count >= count_ell;
 }
 
-uint32_t Search(std::vector<uint32_t> &arr, size_t count, size_t count_ell) {
+uint32_t Search(std::vector<uint32_t>& arr, size_t count, size_t count_ell) {
   // Границы бинарного поиска
   uint32_t mid_up =
       (arr[count - 1] - arr[0]) /
