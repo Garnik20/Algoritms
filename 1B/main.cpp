@@ -3,7 +3,9 @@
 #include <iostream>
 #include <vector>
 
-std::vector<double> LogPref(std::vector<double> inp_arr, size_t count) {
+std::vector<double> LogPref(std::vector<double> inp_arr,
+                            std::vector<size_t> left, std::vector<size_t> right,
+                            size_t count, size_t count_req) {
   // Преобразуем элементы массива с помощью натурального логарифма.
   // Это нужно, чтобы среднее геометрическое можно было найти через суммы
   // логарифмов
@@ -18,8 +20,17 @@ std::vector<double> LogPref(std::vector<double> inp_arr, size_t count) {
   for (size_t i = 1; i < count; ++i) {
     pref_sum[i] = pref_sum[i - 1] + arr_log[i];
   }
+  std::vector<double> results;
+  // Для каждого запроса находим среднее геометрическое чисел в диапазоне
+  for (size_t i = 0; i < count_req; ++i) {
+    // e ^ [(1/k) * (сумма логарифмов от left[i] до right[i])]
+    // где k — это количество элементов в диапазоне
+    double result = exp((pref_sum[right[i]] - pref_sum[left[i] - 1]) /
+                        (right[i] - left[i] + 1));
+    results.emplace_back(result);
+  }
 
-  return pref_sum;
+  return results;
 }
 
 int main() {
@@ -45,16 +56,12 @@ int main() {
     std::cin >> left[i] >> right[i];
   }
 
-  std::vector<double> pref_sum(count);
-  pref_sum = LogPref(inp_arr, count);
+  std::vector<double> results(count);
+  results = LogPref(inp_arr, left, right, count, count_req);
 
-  // Для каждого запроса находим среднее геометрическое чисел в диапазоне
+  // Вывод
   for (size_t i = 0; i < count_req; ++i) {
-    // e ^ [(1/k) * (сумма логарифмов от left[i] до right[i])]
-    // где k — это количество элементов в диапазоне
-    double result = exp((pref_sum[right[i]] - pref_sum[left[i] - 1]) /
-                        (right[i] - left[i] + 1));
-    std::cout << std::fixed << std::setprecision(kDec) << result << '\n';
+    std::cout << std::fixed << std::setprecision(kDec) << results[i] << '\n';
   }
 
   return 0;
