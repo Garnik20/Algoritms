@@ -1,14 +1,16 @@
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
-bool IsCanForD(std::vector<int>& arr, int distance, int count, int count_ell) {
-  int exe_count = 0;  // Счетчик подмножеств с суммой >= distance
-  int sum = 0;  // Переменная для суммы расстояний между точками
+bool IsCanForD(std::vector<int32_t> &arr, int32_t distance, size_t count,
+               size_t count_ell) {
+  size_t exe_count = 0; // Счетчик подмножеств с суммой >= distance
+  size_t sum = 0; // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
-  for (int i = 0; i < count - 1; i++) {
+  for (size_t i = 0; i < count - 1; i++) {
     sum += arr[i];
 
     // Если сумма расстояний между точками >= distance, сбрасываем сумму и
@@ -26,39 +28,40 @@ bool IsCanForD(std::vector<int>& arr, int distance, int count, int count_ell) {
 
 int main() {
   // Вводим количество точек count и количество отрезков count_ell
-  int count_ell;
-  int count;
+  size_t count_ell;
+  size_t count;
   std::cin >> count >> count_ell;
 
   // Вводим координаты точек
   std::vector<int> arr(count);
-  for (int i = 0; i < count; i++) {
+  for (size_t i = 0; i < count; i++) {
     std::cin >> arr[i];
   }
 
   // Границы бинарного поиска
-  int mid_up = (arr[count - 1] - arr[0]) /
-               (count_ell -
-                1);  // Верхняя граница — максимальное расстояние между точками
-  int mid_down = 1;  // Нижняя граница — минимальное расстояние
+  uint32_t mid_up =
+      (arr[count - 1] - arr[0]) /
+      (count_ell -
+       1); // Верхняя граница — максимальное расстояние между точками
+  uint32_t mid_down = 1; // Нижняя граница — минимальное расстояние
 
   // Преобразуем массив arr в массив расстояний между соседними точками
-  for (int i = 0; i < count - 1; i++) {
+  for (size_t i = 0; i < count - 1; i++) {
     arr[i] = arr[i + 1] - arr[i];
   }
 
   // Цикл бинарного поиска
   while (mid_up - mid_down != 1) {
     // Находим середину текущего диапазона
-    int mid = (mid_down + mid_up) / 2;
+    uint32_t mid = (mid_down + mid_up) / 2;
 
     // Проверяем, можно ли выбрать count_ell - 1 отрезков с минимальным
     // расстоянием mid
     if (IsCanForD(arr, mid, count, count_ell - 1)) {
-      mid_down = mid;  // Если можно, поднимаем нижнюю границу
+      mid_down = mid; // Если можно, поднимаем нижнюю границу
       continue;
     }
-    mid_up = mid;  // Если нельзя, опускаем верхнюю границу
+    mid_up = mid; // Если нельзя, опускаем верхнюю границу
   }
 
   // Проверяем крайние значения mid_down и mid_up для получения точного ответа
