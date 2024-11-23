@@ -62,7 +62,7 @@ uint32_t Search(std::vector<uint32_t> &arr, size_t count, size_t count_ell) {
     result = mid_down;
   }
 
-  return;
+  return result;
 }
 
 int main() {
