@@ -6,6 +6,9 @@
 // Класс min_heap - минимальнaq кучa
 class MinHeap {
  private:
+  // Массив кучи
+  std::vector<int64_t> heap;
+
   // Функция sift_up поднимает элемент вверх по куче
   void SiftUp(size_t index) {
     while (index > 0 && heap[index] < heap[(index - 1) / 2]) {
@@ -40,15 +43,13 @@ class MinHeap {
   }
 
  public:
-  // Массив кучи
-  std::vector<long long> heap;
-  void Insert(long long value) {
+  void Insert(int64_t value) {
     heap.push_back(value);  // Добавляем элемент в конец кучи.
     SiftUp(heap.size() - 1);  // Восстанавливаем свойства кучи.
   }
 
   // Метод getMin возвращает минимальный элемент из кучи.
-  long long GetMin() { return heap[0]; }
+  int64_t GetMin() { return heap[0]; }
 
   // Метод extractMin удаляет минимальный элемент из кучи.
   void ExtractMin() {
@@ -60,7 +61,7 @@ class MinHeap {
   }
 
   // Метод decreaseKey уменьшает значение элемента в куче.
-  void DecreaseKey(long long value, long long det) {
+  void DecreaseKey(int64_t value,int64_t det) {
     // Находим индекс элемента с указанным значением.
     size_t count = 0;
     while (count < heap.size() && heap[count] != value) {
@@ -77,14 +78,14 @@ int main() {
   size_t count;
   std::cin >> count;
   // Словарь для хранения вставленных элементов и их индексов.
-  std::map<size_t, long long> help_arr;
+  std::map<size_t,int64_t> help_arr;
 
   for (size_t i = 0; i < count; ++i) {
     std::string str;
     std::cin >> str;
 
     if (str == "insert") {
-      long long value;
+      int64_t value;
       std::cin >> value;
       heap.Insert(value);
       help_arr.insert({i + 1, value});
@@ -93,7 +94,7 @@ int main() {
     } else if (str == "extractMin") {
       heap.ExtractMin();
     } else if (str == "decreaseKey") {
-      long long det;
+      int64_t det;
       size_t ind;
       std::cin >> ind >> det;  // Считываем индекс и значение для уменьшения.
       heap.DecreaseKey(help_arr[ind], det);  // Уменьшаем значение в куче.
