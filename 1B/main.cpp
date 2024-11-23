@@ -23,6 +23,7 @@ std::vector<double> LogPref(std::vector<double> inp_arr, size_t count) {
 }
 
 int main() {
+  const int Dec = 10;
   // Вводим количество элементов в массиве
   size_t count;
   std::cin >> count;
@@ -53,7 +54,7 @@ int main() {
     // где k — это количество элементов в диапазоне
     double result = exp((pref_sum[right[i]] - pref_sum[left[i] - 1]) /
                         (right[i] - left[i] + 1));
-    std::cout << std::fixed << std::setprecision(10) << result << '\n';
+    std::cout << std::fixed << std::setprecision(Dec) << result << '\n';
   }
 
   return 0;
