@@ -1,13 +1,12 @@
-#include <cstdint>
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 // Функция для проверки, можно ли добиться минимального расстояния distance
 // между выбранными точками так, чтобы выбрать хотя бы k точек
-bool IsCanForD(std::vector<int32_t> &arr, int32_t distance, size_t count,
-               size_t count_ell) {
-  size_t exe_count = 0; // Счетчик подмножеств с суммой >= distance
-  size_t sum = 0; // Переменная для суммы расстояний между точками
+bool IsCanForD(std::vector<int32_t>& arr, int32_t distance, size_t count, size_t count_ell) {
+  size_t exe_count = 0;  // Счетчик подмножеств с суммой >= distance
+  size_t sum = 0;  // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
   for (size_t i = 0; i < count - 1; i++) {
@@ -39,11 +38,10 @@ int main() {
   }
 
   // Границы бинарного поиска
-  uint32_t mid_up =
-      (arr[count - 1] - arr[0]) /
-      (count_ell -
-       1); // Верхняя граница — максимальное расстояние между точками
-  uint32_t mid_down = 1; // Нижняя граница — минимальное расстояние
+  uint32_t mid_up = (arr[count - 1] - arr[0]) /
+               (count_ell -
+                1);  // Верхняя граница — максимальное расстояние между точками
+  uint32_t mid_down = 1;  // Нижняя граница — минимальное расстояние
 
   // Преобразуем массив arr в массив расстояний между соседними точками
   for (size_t i = 0; i < count - 1; i++) {
@@ -58,10 +56,10 @@ int main() {
     // Проверяем, можно ли выбрать count_ell - 1 отрезков с минимальным
     // расстоянием mid
     if (IsCanForD(arr, mid, count, count_ell - 1)) {
-      mid_down = mid; // Если можно, поднимаем нижнюю границу
+      mid_down = mid;  // Если можно, поднимаем нижнюю границу
       continue;
     }
-    mid_up = mid; // Если нельзя, опускаем верхнюю границу
+    mid_up = mid;  // Если нельзя, опускаем верхнюю границу
   }
 
   // Проверяем крайние значения mid_down и mid_up для получения точного ответа
