@@ -57,9 +57,9 @@ uint32_t Search(std::vector<uint32_t> &arr, size_t count, size_t count_ell) {
   // Проверяем крайние значения mid_down и mid_up для получения точного ответа
   if (IsCanForD(arr, mid_down, count, count_ell - 1) &&
       IsCanForD(arr, mid_up, count, count_ell - 1)) {
-    result == mid_up;
+    result = mid_up;
   } else {
-    result == mid_down;
+    result = mid_down;
   }
 
   return;
