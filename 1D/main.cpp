@@ -65,6 +65,12 @@ uint32_t Search(std::vector<uint32_t>& arr, size_t count, size_t count_ell) {
   return result;
 }
 
+void Input(std::vector<uint32_t> arr) {
+  for (uint32_t item : arr) {
+    std::cin >> item;
+  }
+}
+
 int main() {
   // Вводим количество точек count и количество отрезков count_ell
   size_t count_ell;
@@ -73,9 +79,8 @@ int main() {
 
   // Вводим координаты точек
   std::vector<uint32_t> arr(count);
-  for (size_t i = 0; i < count; i++) {
-    std::cin >> arr[i];
-  }
+  Input(arr);
+
 
   uint32_t reslut;
   reslut = Search(arr, count, count_ell);
