@@ -35,15 +35,14 @@ std::vector<double> LogPref(std::vector<double> inp_arr,
 
   return results;
 }
-void InputArr(std::vector<double> inp_arr, size_t count) {
+void InputArr(std::vector<double> inp_arr) {
   // Вводим сам массив чисел
   for (auto item : inp_arr) {
     std::cin >> item;
   }
 }
 
-void InputReq(std::vector<size_t> left, std::vector<size_t> right,
-              size_t count_req) {
+void InputReq(std::vector<size_t> left, std::vector<size_t> right) {
   // Вводим границы диапазонов для каждого запроса
   for (auto item : left) {
     size_t item1;
@@ -62,14 +61,14 @@ int main() {
   size_t count;
   std::cin >> count;
   std::vector<double> inp_arr(count);
-  InputArr(inp_arr, count);
+  InputArr(inp_arr);
 
   // Вводим количество запросов
   size_t count_req;
   std::cin >> count_req;
   std::vector<size_t> left(count_req);
   std::vector<size_t> right(count_req);
-  InputReq(left, right, count_req);
+  InputReq(left, right);
 
   std::vector<double> results(count);
   results = LogPref(inp_arr, left, right, count, count_req);
