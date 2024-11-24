@@ -52,7 +52,7 @@ void InputReq(std::vector<size_t> left, std::vector<size_t> right,
   }
 }
 
-void output(std::vector<double> results) {
+void Output(std::vector<double> results) {
   for (auto item : results) {
     std::cout << std::fixed << std::setprecision(kDec) << item << '\n';
   }
@@ -75,7 +75,7 @@ int main() {
   results = LogPref(inp_arr, left, right, count, count_req);
 
   // Вывод
-  output(results);
+  Output(results);
 
   return 0;
 }
