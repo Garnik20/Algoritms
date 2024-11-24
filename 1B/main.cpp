@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+const uint8_t kDec = 10;
+
 std::vector<double> LogPref(std::vector<double> inp_arr,
                             std::vector<size_t> left, std::vector<size_t> right,
                             size_t count, size_t count_req) {
@@ -33,37 +35,47 @@ std::vector<double> LogPref(std::vector<double> inp_arr,
 
   return results;
 }
+void InputArr(std::vector<double> inp_arr, size_t count) {
+  // Вводим сам массив чисел
+  for (auto item : inp_arr) {
+    std::cin >> item;
+  }
+}
 
+void InputReq(std::vector<size_t> left, std::vector<size_t> right,
+              size_t count_req) {
+  // Вводим границы диапазонов для каждого запроса
+  for (auto item : left) {
+    size_t item1;
+    std::cin >> item >> item1;
+    right.emplace_back(item1);
+  }
+}
+
+void output(std::vector<double> results) {
+  for (auto item : results) {
+    std::cout << std::fixed << std::setprecision(kDec) << item << '\n';
+  }
+}
 int main() {
-  const uint8_t kDec = 10;
   // Вводим количество элементов в массиве
   size_t count;
   std::cin >> count;
-
-  // Вводим сам массив чисел
   std::vector<double> inp_arr(count);
-  for (size_t i = 0; i < count; ++i) {
-    std::cin >> inp_arr[i];
-  }
+  InputArr(inp_arr, count);
 
   // Вводим количество запросов
   size_t count_req;
   std::cin >> count_req;
-
-  // Вводим границы диапазонов для каждого запроса
   std::vector<size_t> left(count_req);
   std::vector<size_t> right(count_req);
-  for (size_t i = 0; i < count_req; ++i) {
-    std::cin >> left[i] >> right[i];
-  }
+  InputReq(left, right, count_req);
 
   std::vector<double> results(count);
   results = LogPref(inp_arr, left, right, count, count_req);
 
   // Вывод
-  for (size_t i = 0; i < count_req; ++i) {
-    std::cout << std::fixed << std::setprecision(kDec) << results[i] << '\n';
-  }
+  output(results);
 
   return 0;
 }
