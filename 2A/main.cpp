@@ -61,7 +61,7 @@ class MinHeap {
   }
 
   // Метод decreaseKey уменьшает значение элемента в куче.
-  void DecreaseKey(int64_t value,int64_t det) {
+  void DecreaseKey(int64_t value, int64_t det) {
     // Находим индекс элемента с указанным значением.
     size_t count = 0;
     while (count < heap_.size() && heap_[count] != value) {
@@ -78,7 +78,7 @@ int main() {
   size_t count;
   std::cin >> count;
   // Словарь для хранения вставленных элементов и их индексов.
-  std::map<size_t,int64_t> help_arr;
+  std::map<size_t, int64_t> help_arr;
 
   for (size_t i = 0; i < count; ++i) {
     std::string str;
