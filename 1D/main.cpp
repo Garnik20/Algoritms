@@ -81,7 +81,6 @@ int main() {
   std::vector<uint32_t> arr(count);
   Input(arr);
 
-
   uint32_t reslut;
   reslut = Search(arr, count, count_ell);
 
