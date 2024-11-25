@@ -52,7 +52,7 @@ void InputReq(std::vector<size_t>& left, std::vector<size_t>& right) {
 }
 
 void Output(const std::vector<double>& results) {
-  for (auto &item : results) {
+  for (const auto &item : results) {
     std::cout << std::fixed << std::setprecision(kDec) << item << '\n';
   }
 }
