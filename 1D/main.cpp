@@ -66,7 +66,7 @@ uint32_t Search(std::vector<uint32_t>& arr, size_t count, size_t count_ell) {
 }
 
 void Input(std::vector<uint32_t>& arr) {
-  for (uint32_t item : arr) {
+  for (uint32_t& item : arr) {
     std::cin >> item;
   }
 }
