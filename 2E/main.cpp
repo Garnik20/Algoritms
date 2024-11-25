@@ -4,7 +4,7 @@
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
 template <typename T>
-T Partittion(std::vector<T>& arr, T left, T right, T ind) {
+T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
   T pivot = arr[ind];
   std::swap(arr[ind], arr[right]);
   T ind_pivot = left;
@@ -22,18 +22,14 @@ T Partittion(std::vector<T>& arr, T left, T right, T ind) {
 }
 
 template <typename T>
-T ChosePivot(T left, T right) {
-    if (right <= left) {
-      throw std::invalid_argument("Invalid range: right must be greater than or equal to left");
-    } else {
-      return left + std::rand() % (right - left + 1);
-    }
+size_t ChosePivot(T left, T right) {
+  return left + std::rand() % (right - left + 1);
 }
 
 // Сортировка
 template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
   if (left < right) {
-    T pivot_ind = ChosePivot<T>(left, right);
+    size_t pivot_ind = ChosePivot(left, right);
 
     // Разбиваем массив на части относительно (pivot)
     T partition_ind = Partittion<T>(arr, left, right, pivot_ind);
