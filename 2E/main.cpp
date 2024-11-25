@@ -5,7 +5,7 @@
 // Функция для разделения массива вокруг опорного элемента (pivot)
 template <typename T, typename Comparator>
 T Partittion(std::vector<T>& arr, T left, T right, size_t ind,
-            Comparator comp) {
+             Comparator comp) {
   T pivot = arr[ind];
   std::swap(arr[ind], arr[right]);
   T ind_pivot = left;
