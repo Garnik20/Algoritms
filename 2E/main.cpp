@@ -24,9 +24,10 @@ T Partittion(std::vector<T>& arr, T left, T right, T ind) {
 template <typename T>
 T ChosePivot(T left, T right) {
     if (right <= left) {
-        throw std::invalid_argument("Invalid range: right must be greater than or equal to left");
+      throw std::invalid_argument("Invalid range: right must be greater than or equal to left");
+    } else {
+      return left + std::rand() % (right - left + 1);
     }
-    return left + std::rand() % (right - left + 1);
 }
 
 // Сортировка
