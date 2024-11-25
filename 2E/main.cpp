@@ -24,7 +24,7 @@ T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
 template <typename T>
 void ChosePivot(T left, T right, size_t& pivot) {
   T random_number = std::rand() % right; 
-  if(random_number >= left){
+  if (random_number >= left) {
     pivot = random_number;
   } else {
     pivot = right - random_number;
@@ -32,7 +32,8 @@ void ChosePivot(T left, T right, size_t& pivot) {
 }
 
 // Сортировка
-template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
+template <typename T>
+void QuickSort(std::vector<T>& arr, T left, T right) {
   if (left < right) {
     size_t pivot_ind;
     ChosePivot(left, right, pivot_ind);
