@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 
+template <typename T>
 // Класс min_heap - минимальнaq кучa
 class MinHeap {
  private:
   // Массив кучи
-  std::vector<int64_t> heap_;
+  std::vector<T> heap_;
 
   // Функция sift_up поднимает элемент вверх по куче
   void SiftUp(size_t index) {
@@ -43,13 +44,13 @@ class MinHeap {
   }
 
  public:
-  void Insert(int64_t value) {
+  void Insert(T value) {
     heap_.push_back(value);  // Добавляем элемент в конец кучи.
     SiftUp(heap_.size() - 1);  // Восстанавливаем свойства кучи.
   }
 
   // Метод getMin возвращает минимальный элемент из кучи.
-  int64_t GetMin() { return heap_[0]; }
+  T GetMin() { return heap_[0]; }
 
   // Метод extractMin удаляет минимальный элемент из кучи.
   void ExtractMin() {
@@ -61,7 +62,7 @@ class MinHeap {
   }
 
   // Метод decreaseKey уменьшает значение элемента в куче.
-  void DecreaseKey(int64_t value, int64_t det) {
+  void DecreaseKey(T value, T det) {
     // Находим индекс элемента с указанным значением.
     size_t count = 0;
     while (count < heap_.size() && heap_[count] != value) {
@@ -72,14 +73,15 @@ class MinHeap {
     SiftUp(count);
   }
 };
+template <typename T> void print(std::vector<T> &result) {
+  for (int64_t item : result) {
+    std::cout << item << "\n";
+  }
+}
 
-int main() {
-  MinHeap heap;
-  size_t count;
-  std::cin >> count;
-  // Словарь для хранения вставленных элементов и их индексов.
-  std::map<size_t, int64_t> help_arr;
-
+template <typename T>
+void Requests(MinHeap<T> &heap, size_t count, std::vector<T> &help_arr,
+              std::vector<T> &result) {
   for (size_t i = 0; i < count; ++i) {
     std::string str;
     std::cin >> str;
@@ -88,9 +90,9 @@ int main() {
       int64_t value;
       std::cin >> value;
       heap.Insert(value);
-      help_arr.insert({i + 1, value});
+      help_arr[i + 1] = value;
     } else if (str == "getMin") {
-      std::cout << heap.GetMin() << "\n";
+      result.emplace_back(heap.GetMin());
     } else if (str == "extractMin") {
       heap.ExtractMin();
     } else if (str == "decreaseKey") {
@@ -101,4 +103,17 @@ int main() {
       help_arr[ind] -= det;  // Обновляем значение в словаре.
     }
   }
+}
+
+int main() {
+  MinHeap<int64_t> heap;
+  size_t count;
+  std::cin >> count;
+  // Вектор для хранения вставленных элементов и их индексов.
+  std::vector<int64_t> help_arr(count + 1);
+  std::vector<int64_t> result;
+
+  Requests(heap, count, help_arr, result);
+
+  print(result);
 }
