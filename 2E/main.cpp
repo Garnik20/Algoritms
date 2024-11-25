@@ -32,8 +32,8 @@ void ChosePivot(T left, T right, size_t& pivot) {
 }
 
 // Сортировка
-template <typename T>
-void QuickSort(std::vector<T>& arr, T left, T right) {
+template <typename T, typename Comparator = std::less<T>>
+void QuickSort(std::vector<T>& arr, T left, T right, Comparator comp = Comparator()) {
   if (left < right) {
     size_t pivot_ind;
     ChosePivot(left, right, pivot_ind);
