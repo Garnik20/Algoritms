@@ -37,8 +37,8 @@ template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
     T partition_ind = Partittion(arr, left, right, pivot_ind);
 
     // Рекурсивно сортируем левую и правую части
-    QuickSort(arr, left, partition_ind - 1);
-    QuickSort(arr, partition_ind + 1, right);
+    QuickSort<T>(arr, left, partition_ind - 1);
+    QuickSort<T>(arr, partition_ind + 1, right);
   }
 }
 
