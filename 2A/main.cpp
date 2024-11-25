@@ -73,15 +73,16 @@ class MinHeap {
     SiftUp(count);
   }
 };
-template <typename T> void Print(std::vector<T> &result) {
+template <typename T>
+void Print(std::vector<T> &result) {
   for (int64_t item : result) {
     std::cout << item << "\n";
   }
 }
 
 template <typename T>
-void Requests(MinHeap<T> &heap, size_t count, std::vector<T> &help_arr,
-              std::vector<T> &result) {
+void Requests(MinHeap<T>& heap, size_t count, std::vector<T>& help_arr,
+              std::vector<T>& result) {
   for (size_t i = 0; i < count; ++i) {
     std::string str;
     std::cin >> str;
