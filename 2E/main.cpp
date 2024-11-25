@@ -23,7 +23,7 @@ T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
 
 template <typename T>
 void ChosePivot(T left, T right, size_t& pivot) {
-  pivot = left + std::rand() % (std::abs(right - left) + 1);
+  pivot = left + std::rand() % (right - left + 1);
 }
 
 // Сортировка
