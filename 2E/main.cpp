@@ -22,6 +22,9 @@ T Partittion(std::vector<T>& arr, T left, T right, T ind) {
 }
 
 template <typename T> T ChosePivot(T left, T right) {
+  if (left >= right) {
+    return left;
+  }
   return left + std::rand() % (right - left + 1);
 }
 
