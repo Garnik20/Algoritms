@@ -31,10 +31,10 @@ template <typename T> T ChosePivot(T left, T right) {
 // Сортировка
 template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
   if (left < right) {
-    T pivot_ind = ChosePivot(left, right);
+    T pivot_ind = ChosePivot<T>(left, right);
 
     // Разбиваем массив на части относительно (pivot)
-    T partition_ind = Partittion(arr, left, right, pivot_ind);
+    T partition_ind = Partittion<T>(arr, left, right, pivot_ind);
 
     // Рекурсивно сортируем левую и правую части
     QuickSort<T>(arr, left, partition_ind - 1);
