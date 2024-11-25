@@ -8,7 +8,7 @@ void SortByByte(std::vector<T>& arr, uint32_t byte_ind, size_t count) {
   std::vector<T> output(count);
   const uint8_t kHex = 0b11111111;
   const uint8_t kByt = 8;
-  std::vector<uint32_t>count_byte(kHex) = {0};
+  std::vector<uint32_t> count_byte(kHex, 0);
 
   // Считаем частоты каждого значения байта на позиции byte_ind для всех чисел
   for (size_t i = 0; i < count; ++i) {
@@ -45,8 +45,8 @@ void SortLSD(std::vector<T>& arr, size_t count) {
 
 int main() {
   int count;
-  std::cin >> count; // Считываем количество элементов
-  std::vector<uint64_t> arr(count); // Вектор для хранения элементов
+  std::cin >> count;  // Считываем количество элементов
+  std::vector<uint64_t> arr(count);  // Вектор для хранения элементов
 
   // Считываем элементы и добавляем в массив
   for (uint64_t item : arr) {
