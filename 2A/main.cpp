@@ -73,7 +73,7 @@ class MinHeap {
     SiftUp(count);
   }
 };
-template <typename T> void print(std::vector<T> &result) {
+template <typename T> void Print(std::vector<T> &result) {
   for (int64_t item : result) {
     std::cout << item << "\n";
   }
@@ -115,5 +115,5 @@ int main() {
 
   Requests(heap, count, help_arr, result);
 
-  print(result);
+  Print(result);
 }
