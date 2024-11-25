@@ -74,7 +74,7 @@ class MinHeap {
   }
 };
 template <typename T>
-void Print(std::vector<T> &result) {
+void Print(std::vector<T>& result) {
   for (int64_t item : result) {
     std::cout << item << "\n";
   }
