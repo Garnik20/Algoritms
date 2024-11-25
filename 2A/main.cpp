@@ -3,12 +3,13 @@
 #include <string>
 #include <vector>
 
-template <typename T>
+template <typename T, typename Comparator = std::less<T>>
 // Класс min_heap - минимальнaq кучa
 class MinHeap {
  private:
   // Массив кучи
   std::vector<T> heap_;
+  Comparator comp_;  // Экземпляр компаратора
 
   // Функция sift_up поднимает элемент вверх по куче
   void SiftUp(size_t index) {
@@ -44,6 +45,9 @@ class MinHeap {
   }
 
  public:
+  // Конструктор с возможностью передачи пользовательского компаратора
+  explicit MinHeap(Comparator comp = Comparator()) : comp_(comp) {}
+
   void Insert(T value) {
     heap_.push_back(value);  // Добавляем элемент в конец кучи.
     SiftUp(heap_.size() - 1);  // Восстанавливаем свойства кучи.
