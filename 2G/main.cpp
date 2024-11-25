@@ -39,7 +39,7 @@ void SortLSD(std::vector<T>& arr, size_t count) {
   const int kByt = 8;
   // Последовательно сортируем по каждому байту (от младшего к старшему)
   for (size_t byte_ind = 0; byte_ind < kByt; ++byte_ind) {
-    SortByByte(arr, byte_ind, count); // Сортируем по конкретному байту
+    SortByByte(arr, byte_ind, count);  // Сортируем по конкретному байту
   }
 }
 
