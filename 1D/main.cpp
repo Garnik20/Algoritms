@@ -10,14 +10,14 @@ bool IsCanForD(std::vector<uint32_t>& arr, uint32_t distance, size_t count,
   uint32_t sum = 0;  // Переменная для суммы расстояний между точками
 
   // Проходим по всем элементам массива
-  for (size_t i = 0; i < count - 1; i++) {
+  for (size_t i = 0; i < count - 1; ++i) {
     sum += arr[i];
 
     // Если сумма расстояний между точками >= distance, сбрасываем сумму и
     // увеличиваем счетчик
     if (sum >= distance) {
       sum = 0;
-      exe_count++;
+      ++exe_count;
     }
   }
 
@@ -35,7 +35,7 @@ uint32_t Search(std::vector<uint32_t>& arr, size_t count, size_t count_ell) {
   uint32_t mid_down = 1;  // Нижняя граница — минимальное расстояние
 
   // Преобразуем массив arr в массив расстояний между соседними точками
-  for (size_t i = 0; i < count - 1; i++) {
+  for (size_t i = 0; i < count - 1; ++i) {
     arr[i] = arr[i + 1] - arr[i];
   }
 
@@ -65,7 +65,7 @@ uint32_t Search(std::vector<uint32_t>& arr, size_t count, size_t count_ell) {
   return result;
 }
 
-void Input(std::vector<uint32_t> arr) {
+void Input(std::vector<uint32_t>& arr) {
   for (uint32_t item : arr) {
     std::cin >> item;
   }
