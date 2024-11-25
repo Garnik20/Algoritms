@@ -22,17 +22,15 @@ T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
 }
 
 template <typename T>
-size_t ChosePivot(T left, T right) {
-  if (right != left) {
-    return left + std::rand() % (std::abs(right - left) + 1);
-  }
-  return 1;
+void ChosePivot(T left, T right, size_t& pivot) {
+  pivot = left + std::rand() % (std::abs(right - left) + 1);
 }
 
 // Сортировка
 template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
   if (left < right) {
-    size_t pivot_ind = ChosePivot(left, right);
+    size_t pivot_ind;
+    ChosePivot(left, right, pivot_ind);
 
     // Разбиваем массив на части относительно (pivot)
     T partition_ind = Partittion<T>(arr, left, right, pivot_ind);
