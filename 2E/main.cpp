@@ -1,14 +1,16 @@
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
-int Partittion(std::vector<int>& arr, int left, int right, int ind) {
-  int pivot = arr[ind];
+template <typename T>
+T Partittion(std::vector<T>& arr, T left, T right, T ind) {
+  T pivot = arr[ind];
   std::swap(arr[ind], arr[right]);
-  int ind_pivot = left;
+  T ind_pivot = left;
 
   // Перемещаем элементы меньше опорного в левую часть
-  for (int j = left; j < right; ++j) {
+  for (T j = left; j < right; ++j) {
     if (arr[j] < pivot) {
       std::swap(arr[ind_pivot], arr[j]);
       ind_pivot++;
@@ -20,12 +22,12 @@ int Partittion(std::vector<int>& arr, int left, int right, int ind) {
 }
 
 // Сортировка
-void QuickSort(std::vector<int>& arr, int left, int right) {
+template <typename T> void QuickSort(std::vector<T>& arr, T left, T right) {
   if (left < right) {
-    int pivot_ind = left + std::rand() % (right - left + 1);
+    T pivot_ind = ChosePivot(left, right);
 
     // Разбиваем массив на части относительно (pivot)
-    int partition_ind = Partittion(arr, left, right, pivot_ind);
+    T partition_ind = Partittion(arr, left, right, pivot_ind);
 
     // Рекурсивно сортируем левую и правую части
     QuickSort(arr, left, partition_ind - 1);
@@ -33,22 +35,24 @@ void QuickSort(std::vector<int>& arr, int left, int right) {
   }
 }
 
+template <typename T> T ChosePivot(T left, T right) {
+  return left + std::rand() % (right - left + 1);
+}
+
 int main() {
-  int count;
+  size_t count;
   std::cin >> count;
-  std::vector<int> arr;
-  int num;
-  for (int i = 0; i < count; i++) {
-    std::cin >> num;
-    arr.push_back(num);
+  std::vector<uint32_t> arr(count);
+  for (uint32_t item : arr) {
+    std::cin >> item;
   }
 
-  QuickSort(arr, 0, arr.size() - 1);
+  QuickSort<uint32_t>(arr, 0, arr.size() - 1);
 
-  for (int i = 0; i < count - 1; i++) {
-    std::cout << arr[i] << " ";
+  for (uint32_t item : arr) {
+    std::cout << item << " ";
   }
-  std::cout << arr[count - 1] << '\n';
+  std::cout << '\n';
 
   return 0;
 }
