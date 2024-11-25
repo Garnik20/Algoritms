@@ -35,24 +35,24 @@ std::vector<double> LogPref(std::vector<double> inp_arr,
 
   return results;
 }
-void InputArr(std::vector<double> inp_arr) {
+void InputArr(std::vector<double>& inp_arr) {
   // Вводим сам массив чисел
-  for (auto item : inp_arr) {
+  for (auto& item : inp_arr) {
     std::cin >> item;
   }
 }
 
-void InputReq(std::vector<size_t> left, std::vector<size_t> right) {
+void InputReq(std::vector<size_t>& left, std::vector<size_t>& right) {
   // Вводим границы диапазонов для каждого запроса
-  for (auto item : left) {
+  for (auto& item : left) {
     size_t item1;
     std::cin >> item >> item1;
     right.emplace_back(item1);
   }
 }
 
-void Output(std::vector<double> results) {
-  for (auto item : results) {
+void Output(const std::vector<double>& results) {
+  for (const auto& item : results) {
     std::cout << std::fixed << std::setprecision(kDec) << item << '\n';
   }
 }
