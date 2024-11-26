@@ -11,22 +11,22 @@ struct AVLNode {
 
 class AVLTree {
 public:
-  AVLTree() : root(nullptr) {}
+  AVLTree() : root_(nullptr) {}
 
   // Добавление ключа в дерево
-  void Add(int32_t key) { root = Insert(root, key); }
+  void Add(int32_t key) { root_ = Insert(root_, key); }
 
   // Поиск следующего элемента, не меньшего key
   int32_t Next(int32_t key) {
-    AVLNode *result = FindNext(root, key);
+    AVLNode *result = FindNext(root_, key);
     return result ? result->key : -1;
   }
 
 private:
-  AVLNode *root;
+  AVLNode *root_;
 
   // Получение высоты узла
-  int32_t GetHeight(AVLNode *node) { return node ? node->height : 0; }
+  int32_t GetHeight(AVLNode *node) const { return node != nullptr ? node->height : 0; }
 
   // Обновление высоты узла
   void UpdateHeight(AVLNode *node) {
@@ -35,7 +35,7 @@ private:
 
   // Баланс узла
   int32_t GetBalance(AVLNode *node) {
-    return node ? GetHeight(node->left) - GetHeight(node->right) : 0;
+    return node != nullptr ? GetHeight(node->left) - GetHeight(node->right) : 0;
   }
 
   // Правый поворот
