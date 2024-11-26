@@ -4,30 +4,6 @@
 
 template <typename T, typename Comp = std::less<T>>
 class Queue {
- private:
-  std::vector<T> stack_1_;  // Стек для добавления новых элементов
-  std::vector<T> stack_1_min_;  // Стек для отслеживания минимума в stack_1_
-  std::vector<T> stack_2_;  // Стек для удаления элементов из очереди
-  std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
-
-  // Перемещает все элементы из stack_1_ в stack_2_
-  T Transfer() {
-    while (!stack_1_.empty()) {
-      T el = stack_1_.back();  // Берем верхний элемент из stack_1_
-      stack_2_.emplace_back(el);  // Добавляем его в stack_2_
-      stack_1_.pop_back();     // Удаляем из stack_1_
-      stack_1_min_.pop_back();  // Удаляем элемент минимума в stack_1_
-
-      // Обновляем stack_2_min_ для корректного отслеживания минимума в stack_2_
-      if (stack_2_min_.empty()) {
-        stack_2_min_.emplace_back(el);
-      } else {
-        stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el));
-      }
-    }
-    return 0;
-  }
-
  public:
   // Добавление элемента в очередь
   T Enqueue(T num) {
@@ -37,7 +13,7 @@ class Queue {
     } else {
       stack_1_min_.push_back(std::min(stack_1_min_.back(), num));
     }
-    return 0;
+    return -2;
   }
 
   // Удаление элемента из начала очереди
@@ -55,7 +31,7 @@ class Queue {
   }
 
   // Получение элемента из начала очереди без удаления
-  T Front() const {
+  T Front() {
     if (stack_1_.empty() && stack_2_.empty()) {
       return -1;
     }
@@ -74,7 +50,7 @@ class Queue {
     stack_2_.clear();
     stack_1_min_.clear();
     stack_2_min_.clear();
-    return 0;
+    return -2;
   }
 
   // Получение минимального элемента в очереди
@@ -94,6 +70,29 @@ class Queue {
     }
     return min_queue;
   }
+ private:
+  std::vector<T> stack_1_;  // Стек для добавления новых элементов
+  std::vector<T> stack_1_min_;  // Стек для отслеживания минимума в stack_1_
+  std::vector<T> stack_2_;  // Стек для удаления элементов из очереди
+  std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
+
+  // Перемещает все элементы из stack_1_ в stack_2_
+  void Transfer(){
+    while (!stack_1_.empty()) {
+      T el = stack_1_.back();  // Берем верхний элемент из stack_1_
+      stack_2_.emplace_back(el);  // Добавляем его в stack_2_
+      stack_1_.pop_back();     // Удаляем из stack_1_
+      stack_1_min_.pop_back();  // Удаляем элемент минимума в stack_1_
+
+      // Обновляем stack_2_min_ для корректного отслеживания минимума в stack_2_
+      if (stack_2_min_.empty()) {
+        stack_2_min_.emplace_back(el);
+      } else {
+        stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el));
+      }
+    }
+  }
+
 };
 
 template <typename T>
@@ -128,7 +127,7 @@ int main() {
   Requests(count, heap, results);
   
   for(int32_t& item : results) {
-    if(item == 0) {
+    if(item == -2) {
       std::cout << "ok\n";
     } else if (item == -1) {
       std::cout << "error\n";
