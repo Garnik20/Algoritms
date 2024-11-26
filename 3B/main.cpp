@@ -1,12 +1,15 @@
 #include <iostream>
 #include <vector>
 
+const int32_t kHex = 1000000000;
+
 struct AVLNode {
   int32_t key;
   int32_t height;
   AVLNode *left;
   AVLNode *right;
-  AVLNode(int32_t new_key) : key(new_key), height(1), left(nullptr), right(nullptr) {}
+  AVLNode(int32_t new_key)
+      : key(new_key), height(1), left(nullptr), right(nullptr) {}
 };
 
 class AVLTree {
@@ -19,14 +22,16 @@ public:
   // Поиск следующего элемента, не меньшего key
   int32_t Next(int32_t key) {
     AVLNode *result = FindNext(root_, key);
-    return result ? result->key : -1;
+    return result != nullptr ? result->key : -1;
   }
 
 private:
   AVLNode *root_;
 
   // Получение высоты узла
-  int32_t GetHeight(AVLNode *node) const { return node != nullptr ? node->height : 0; }
+  static int32_t GetHeight(AVLNode *node) {
+    return node != nullptr ? node->height : 0;
+  }
 
   // Обновление высоты узла
   void UpdateHeight(AVLNode *node) {
@@ -39,30 +44,30 @@ private:
   }
 
   // Правый поворот
-  AVLNode *RotateRight(AVLNode *y) {
-    AVLNode *x = y->left;
-    AVLNode *T2 = x->right;
-    x->right = y;
-    y->left = T2;
-    UpdateHeight(y);
-    UpdateHeight(x);
-    return x;
+  AVLNode *RotateRight(AVLNode *node) {
+    AVLNode *node_l = node->left;
+    AVLNode *node_lr = node_l->right;
+    node_l->right = node;
+    node->left = node_lr;
+    UpdateHeight(node);
+    UpdateHeight(node_l);
+    return node_l;
   }
 
   // Левый поворот
-  AVLNode *RotateLeft(AVLNode *x) {
-    AVLNode *y = x->right;
-    AVLNode *T2 = y->left;
-    y->left = x;
-    x->right = T2;
-    UpdateHeight(x);
-    UpdateHeight(y);
-    return y;
+  AVLNode *RotateLeft(AVLNode *node) {
+    AVLNode *node_r = node->right;
+    AVLNode *node_rl = node_r->left;
+    node_r->left = node;
+    node->right = node_rl;
+    UpdateHeight(node);
+    UpdateHeight(node_r);
+    return node_r;
   }
 
   // Вставка элемента с балансировкой
   AVLNode *Insert(AVLNode *node, int32_t key) {
-    if (!node)
+    if (node == nullptr)
       return new AVLNode(key);
 
     if (key < node->key)
@@ -98,7 +103,7 @@ private:
   // Поиск следующего узла, не меньшего key
   AVLNode *FindNext(AVLNode *node, int32_t key) {
     AVLNode *res = nullptr;
-    while (node) {
+    while (node != nullptr) {
       if (node->key >= key) {
         res = node;
         node = node->left;
@@ -111,7 +116,7 @@ private:
 };
 
 void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
-    int32_t last_y = 0;
+  int32_t last_y = 0;
   for (size_t i = 0; i < count; ++i) {
     char operation;
     int32_t value;
@@ -121,7 +126,7 @@ void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
       if (last_y == 0 || (results.empty() || results.back() == -1)) {
         avl_tree.Add(value);
       } else {
-        avl_tree.Add((value + last_y) % 1000000000);
+        avl_tree.Add((value + last_y) % kHex);
       }
       last_y = 0;
     } else if (operation == '?') {
