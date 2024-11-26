@@ -11,7 +11,7 @@ class Queue {
   std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
 
   // Перемещает все элементы из stack_1_ в stack_2_
-  void Transfer() {
+  T Transfer() {
     while (!stack_1_.empty()) {
       T el = stack_1_.back();  // Берем верхний элемент из stack_1_
       stack_2_.emplace_back(el);  // Добавляем его в stack_2_
@@ -25,6 +25,7 @@ class Queue {
         stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el));
       }
     }
+    return 0;
   }
 
  public:
