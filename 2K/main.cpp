@@ -70,6 +70,7 @@ class Queue {
     }
     return min_queue;
   }
+
  private:
   std::vector<T> stack_1_;  // Стек для добавления новых элементов
   std::vector<T> stack_1_min_;  // Стек для отслеживания минимума в stack_1_
@@ -92,11 +93,10 @@ class Queue {
       }
     }
   }
-
 };
 
 template <typename T>
-void Requests(size_t count, Queue<T>& heap, std::vector<T> results) {
+void Requests(size_t count, Queue<T>& heap, std::vector<T>& results) {
   std::string command;
   for (size_t i = 0; i < count; ++i) {
     std::cin >> command;
@@ -123,9 +123,9 @@ int main() {
   std::cin >> count;
   Queue<int32_t> heap;
   std::vector<int32_t> results;
-  
+
   Requests(count, heap, results);
-  
+
   for (int32_t& item : results) {
     if (item == -2) {
       std::cout << "ok\n";
@@ -134,7 +134,6 @@ int main() {
     } else {
       std::cout << item << "\n";
     }
-    
   }
   return 0;
 }
