@@ -13,7 +13,7 @@ void SortByByte(std::vector<T>& arr, uint32_t byte_ind, size_t count) {
   // Считаем частоты каждого значения байта на позиции byte_ind для всех чисел
   for (size_t i = 0; i < count; ++i) {
     unsigned char byte = (arr[i] >> (byte_ind * kByt)) & kHex;
-    count_byte[byte]++;  // Увеличиваем счетчик для данного байта
+    ++count_byte[byte];  // Увеличиваем счетчик для данного байта
   }
 
   // Накапливаем частоты для определения позиций элементов
