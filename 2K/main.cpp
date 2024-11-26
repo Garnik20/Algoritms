@@ -126,8 +126,8 @@ int main() {
   
   Requests(count, heap, results);
   
-  for(int32_t& item : results) {
-    if(item == -2) {
+  for (int32_t& item : results) {
+    if (item == -2) {
       std::cout << "ok\n";
     } else if (item == -1) {
       std::cout << "error\n";
