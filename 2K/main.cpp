@@ -77,11 +77,11 @@ class Queue {
   std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
 
   // Перемещает все элементы из stack_1_ в stack_2_
-  void Transfer(){
+  void Transfer() {
     while (!stack_1_.empty()) {
       T el = stack_1_.back();  // Берем верхний элемент из stack_1_
       stack_2_.emplace_back(el);  // Добавляем его в stack_2_
-      stack_1_.pop_back();     // Удаляем из stack_1_
+      stack_1_.pop_back();        // Удаляем из stack_1_
       stack_1_min_.pop_back();  // Удаляем элемент минимума в stack_1_
 
       // Обновляем stack_2_min_ для корректного отслеживания минимума в stack_2_
