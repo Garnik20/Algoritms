@@ -22,10 +22,12 @@ void SortByByte(std::vector<T>& arr, uint32_t byte_ind, size_t count) {
   }
 
   // Заполняем массив output, размещая элементы в порядке, определенном count
-  for (size_t i = count - 1; i >= 0; --i) {
+  for (size_t i = count - 1; i != 0; --i) {
     uint8_t byte = (arr[i] >> (byte_ind * kByt)) & kHex;
     output[--count_byte[byte]] = arr[i];
   }
+  uint8_t byte = (arr[0] >> (byte_ind * kByt)) & kHex;
+  output[--count_byte[byte]] = arr[0];
 
   // Копируем отсортированные значения из output обратно в исходный массив
   for (size_t i = 0; i < count; ++i) {
@@ -49,7 +51,7 @@ int main() {
   std::vector<uint64_t> arr(count);  // Вектор для хранения элементов
 
   // Считываем элементы и добавляем в массив
-  for (uint64_t item : arr) {
+  for (uint64_t& item : arr) {
     std::cin >> item;
   }
 
@@ -57,7 +59,7 @@ int main() {
   SortLSD(arr, count);
 
   // Выводим отсортированные элементы
-  for (uint64_t num : arr) {
+  for (uint64_t& num : arr) {
     std::cout << num << "\n";
   }
 
