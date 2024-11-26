@@ -1,123 +1,140 @@
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
+template <typename T, typename Comp = std::less<T>>
 class Queue {
  private:
-  // Перемещает все элементы из stack_1 в stack_2
-  void Transfer() {
-    while (!stack_1.empty()) {
-      int el = stack_1.back();  // Берем верхний элемент из stack_1
-      stack_2.push_back(el);  // Добавляем его в stack_2
-      stack_1.pop_back();     // Удаляем из stack_1
-      stack_1_min.pop_back();  // Удаляем элемент минимума в stack_1
+  std::vector<T> stack_1_;  // Стек для добавления новых элементов
+  std::vector<T> stack_1_min_;  // Стек для отслеживания минимума в stack_1_
+  std::vector<T> stack_2_;  // Стек для удаления элементов из очереди
+  std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
 
-      // Обновляем stack_2_min для корректного отслеживания минимума в stack_2
-      if (stack_2_min.empty()) {
-        stack_2_min.push_back(el);
+  // Перемещает все элементы из stack_1_ в stack_2_
+  void Transfer() {
+    while (!stack_1_.empty()) {
+      T el = stack_1_.back();  // Берем верхний элемент из stack_1_
+      stack_2_.emplace_back(el);  // Добавляем его в stack_2_
+      stack_1_.pop_back();     // Удаляем из stack_1_
+      stack_1_min_.pop_back();  // Удаляем элемент минимума в stack_1_
+
+      // Обновляем stack_2_min_ для корректного отслеживания минимума в stack_2_
+      if (stack_2_min_.empty()) {
+        stack_2_min_.emplace_back(el);
       } else {
-        stack_2_min.push_back(std::min(stack_2_min.back(), el));
+        stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el));
       }
     }
   }
 
  public:
-  std::vector<int> stack_1;  // Стек для добавления новых элементов
-  std::vector<int> stack_1_min;  // Стек для отслеживания минимума в stack_1
-  std::vector<int> stack_2;  // Стек для удаления элементов из очереди
-  std::vector<int> stack_2_min;  // Стек для отслеживания минимума в stack_2
   // Добавление элемента в очередь
-  void Enqueue(int num) {
-    stack_1.push_back(num);  // Добавляем элемент в stack_1
-    if (stack_1_min.empty()) {
-      stack_1_min.push_back(num);  // Если stack_1_min пуст
+  T Enqueue(T num) {
+    stack_1_.push_back(num);  // Добавляем элемент в stack_1_
+    if (stack_1_min_.empty()) {
+      stack_1_min_.push_back(num);  // Если stack_1_min_ пуст
     } else {
-      stack_1_min.push_back(std::min(stack_1_min.back(), num));
+      stack_1_min_.push_back(std::min(stack_1_min_.back(), num));
     }
-    std::cout << "ok\n";
+    return 0;
   }
 
   // Удаление элемента из начала очереди
-  void Dequeue() {
-    if (stack_1.empty() && stack_2.empty()) {
-      std::cout << "error\n";
-      return;
+  T Dequeue() {
+    if (stack_1_.empty() && stack_2_.empty()) {
+      return -1;
     }
-    if (stack_2.empty()) {
-      Transfer();  // Переносим элементы из stack_1 в stack_2
+    if (stack_2_.empty()) {
+      Transfer();  // Переносим элементы из stack_1_ в stack_2_
     }
-    std::cout << stack_2.back() << '\n';  // Выводим элемент из начала очереди
-    stack_2.pop_back();  // Удаляем его
-    stack_2_min.pop_back();  // Удаляем соответствующий минимум
+    T res = stack_2_.back();  // Выводим элемент из начала очереди
+    stack_2_.pop_back();  // Удаляем его
+    stack_2_min_.pop_back();  // Удаляем соответствующий минимум
+    return res;
   }
 
   // Получение элемента из начала очереди без удаления
-  void Front() {
-    if (stack_1.empty() && stack_2.empty()) {
-      std::cout << "error\n";
-      return;
+  T Front() const {
+    if (stack_1_.empty() && stack_2_.empty()) {
+      return -1;
     }
-    if (stack_2.empty()) {
-      Transfer();  // Переносим элементы из stack_1 в stack_2
+    if (stack_2_.empty()) {
+      Transfer();  // Переносим элементы из stack_1_ в stack_2_
     }
-    std::cout << stack_2.back() << '\n';  // Выводим элемент из начала очереди
+    return stack_2_.back();  // Выводим элемент из начала очереди
   }
 
   // Вывод размера очереди
-  void SizeSt() const { std::cout << stack_1.size() + stack_2.size() << '\n'; }
+  T SizeSt() const { return stack_1_.size() + stack_2_.size(); }
 
   // Очистка очереди
-  void Clear() {
-    stack_1.clear();
-    stack_2.clear();
-    stack_1_min.clear();
-    stack_2_min.clear();
-    std::cout << "ok\n";
+  T Clear() {
+    stack_1_.clear();
+    stack_2_.clear();
+    stack_1_min_.clear();
+    stack_2_min_.clear();
+    return 0;
   }
 
   // Получение минимального элемента в очереди
-  void Min() {
-    if (stack_1.empty() && stack_2.empty()) {
-      std::cout << "error\n";
-      return;
+  T Min() {
+    if (stack_1_.empty() && stack_2_.empty()) {
+      return -1;
     }
 
-    // Выбираем минимальный элемент между stack_1_min и stack_2_min
-    int min_queue;
-    if (stack_1_min.empty()) {
-      min_queue = stack_2_min.back();
-    } else if (stack_2_min.empty()) {
-      min_queue = stack_1_min.back();
+    // Выбираем минимальный элемент между stack_1_min_ и stack_2_min_
+    T min_queue;
+    if (stack_1_min_.empty()) {
+      min_queue = stack_2_min_.back();
+    } else if (stack_2_min_.empty()) {
+      min_queue = stack_1_min_.back();
     } else {
-      min_queue = std::min(stack_1_min.back(), stack_2_min.back());
+      min_queue = std::min(stack_1_min_.back(), stack_2_min_.back());
     }
-    std::cout << min_queue << '\n';
+    return min_queue;
   }
 };
 
-int main() {
-  int count;
-  std::cin >> count;
-  Queue heap;
+template <typename T>
+void Requests(size_t count, Queue<T>& heap, std::vector<T> results) {
   std::string command;
-
-  for (int i = 0; i < count; ++i) {
+  for (size_t i = 0; i < count; ++i) {
     std::cin >> command;
     if (command == "enqueue") {
-      int element;
+      T element;
       std::cin >> element;
-      heap.Enqueue(element);
+      results.emplace_back(heap.Enqueue(element));
     } else if (command == "front") {
-      heap.Front();
+      results.emplace_back(heap.Front());
     } else if (command == "dequeue") {
-      heap.Dequeue();
+      results.emplace_back(heap.Dequeue());
     } else if (command == "size") {
-      heap.SizeSt();
+      results.emplace_back(heap.SizeSt());
     } else if (command == "min") {
-      heap.Min();
+      results.emplace_back(heap.Min());
     } else if (command == "clear") {
-      heap.Clear();
+      results.emplace_back(heap.Clear());
     }
   }
+}
 
+int main() {
+  size_t count;
+  std::cin >> count;
+  Queue<int32_t> heap;
+  std::vector<int32_t> results;
+  
+  Requests(count, heap, results);
+  
+  for(int32_t& item : results) {
+    if(item == 0) {
+      std::cout << "ok\n";
+    } else if (item == -1) {
+      std::cout << "error\n";
+    } else {
+      std::cout << item << "\n";
+    }
+    
+  }
   return 0;
 }
