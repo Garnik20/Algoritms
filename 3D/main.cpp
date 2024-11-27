@@ -163,15 +163,16 @@ class Treap {
   int32_t Next(int32_t value) { return Next(root_, value); }
 
   // Поиск предыдущего элемента
-  int Prev(int value) { return Prev(root_, value); }
+  int32_t Prev(int32_t value) { return Prev(root_, value); }
 
   // Поиск k-го элемента по порядку
-  int Kth(int k) { return Kth(root_, k); }
+  int32_t Kth(size_t prir) { return Kth(root_, prir); }
 };
 
 void Requests(Treap& tree, std::vector<int32_t>& results) {
   std::string op;
-  int32_t x, k;
+  int32_t x;
+  size_t k;
   while (std::cin >> op) {
     if (op == "Insert") {
       std::cin >> x;
@@ -181,39 +182,49 @@ void Requests(Treap& tree, std::vector<int32_t>& results) {
       tree.Deletenode(x);
     } else if (op == "Exists") {
       std::cin >> x;
-      if (tree.Exists(x))
-        std::cout << "true\n";
-      else
-        std::cout << "false\n";
+      if (tree.Exists(x)) {
+        results.emplace_back(-2);
+      } else {
+        results.emplace_back(-3);
+      }
     } else if (op == "Next") {
       std::cin >> x;
       int32_t result = tree.Next(x);
-      if (result == -1)
-        std::cout << "none\n";
-      else
-        std::cout << result << '\n';
+      results.emplace_back(result);
     } else if (op == "Prev") {
       std::cin >> x;
       int32_t result = tree.Prev(x);
-      if (result == -1)
-        std::cout << "none\n";
-      else
-        std::cout << result << '\n';
+      results.emplace_back(result);
     } else if (op == "Kth") {
       std::cin >> k;
-      int result = tree.Kth(k);
-      if (result == -1)
-        std::cout << "none\n";
-      else
-        std::cout << result << '\n';
+      int32_t result = tree.Kth(k);
+      results.emplace_back(result);
     }
+  }
+}
+
+void Print(const std::vector<int32_t>& results) {
+  for (const int32_t& item : results) {
+    if (item == -1) {
+      std::cout << "none\n";
+    } else if (item == -2) {
+      std::cout << "true\n";
+    } else if (item == -3) {
+      std::cout << "false\n";
+    } else {
+      std::cout << item << "\n";
+    }
+    
   }
 }
 
 int main() {
   Treap tree;
+  std::vector<int32_t> results;
 
-  
+  Requests(tree, results);
+
+  Print(results);
 
   return 0;
 }
