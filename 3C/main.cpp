@@ -7,8 +7,8 @@ struct Node {
   std::string value;
   Node* left;
   Node* right;
-  Node(const std::string& k, const std::string& v)
-      : key(k), value(v), left(nullptr), right(nullptr) {}
+  Node(const std::string& key, const std::string& val)
+      : key(key), value(val), left(nullptr), right(nullptr) {}
 };
 
 class SplayTree {
@@ -16,7 +16,7 @@ class SplayTree {
   Node* root_;
 
   // Правый поворот
-  Node* RightRot(Node* node) {
+  static Node* RightRot(Node* node) {
     Node* node_l = node->left;
     node->left = node_l->right;
     node_l->right = node;
@@ -24,7 +24,7 @@ class SplayTree {
   }
 
   // Левый поворот
-  Node* LeftRot(Node* node) {
+  static Node* LeftRot(Node* node) {
     Node* node_r = node->right;
     node->right = node_r->left;
     node_r->left = node;
@@ -32,59 +32,59 @@ class SplayTree {
   }
 
   // Splay: перемещает узел к корню дерева
-  Node* Splay(Node* root_, const std::string& key) {
+  Node* Splay(Node* root, const std::string& key) {
     // Если дерево пусто
-    if (!root_ || key == root_->key) return root_;
+    if (!root || key == root->key) return root;
 
     // Ключ находится в левом поддереве
-    if (key < root_->key) {
+    if (key < root->key) {
       // Если левое поддерево пусто
-      if (!root_->left) return root_;
+      if (!root->left) return root;
 
       // Zig-Zig левый левый
-      if (key < root_->left->key) {
+      if (key < root->left->key) {
         // Делаем сплей для левой ветки левой части
-        root_->left->left = Splay(root_->left->left, key);
+        root->left->left = Splay(root->left->left, key);
 
         // Потом правый приворот
-        root_ = RightRot(root_);
+        root = RightRot(root);
       }
       // Zig-Zag левый правый
-      else if (key > root_->left->key) {
+      else if (key > root->left->key) {
         // Делаем сплей для правой ветки левой части
-        root_->left->right = Splay(root_->left->right, key);
+        root->left->right = Splay(root->left->right, key);
 
         // Потом левый приворот если он не пуст
-        if (root_->left->right) root_->left = LeftRot(root_->left);
+        if (root->left->right) root->left = LeftRot(root->left);
       }
 
       // Вконце если не пуст левое поддерево делаем правый приворот
-      return RightRot(root_);
+      return RightRot(root);
     }
     // Ключ находится в правом поддереве
 
     // Если правое поддерево пусто
-    if (!root_->right) return root_;
+    if (!root->right) return root;
 
     // Zig-Zig правый правый
-    if (key > root_->right->key) {
+    if (key > root->right->key) {
     // Делаем сплей для правой ветки правой части
-    root_->right->right = Splay(root_->right->right, key);
+    root->right->right = Splay(root->right->right, key);
 
     // Потом левый приворот
-    root_ = LeftRot(root_);
+    root = LeftRot(root);
     }
     // Zig-Zag правый левый
-    else if (key < root_->right->key) {
+    else if (key < root->right->key) {
     // Делаем сплей для левой ветки правой части
-    root_->right->left = Splay(root_->right->left, key);
+    root->right->left = Splay(root->right->left, key);
 
     // Потом правый приворот если он не пуст
-    if (root_->right->left) root_->right = RightRot(root_->right);
+    if (root->right->left) root->right = RightRot(root->right);
     }
     
     // Вконце если не пуст правое поддерево делаем левый приворот
-    return LeftRot(root_);
+    return LeftRot(root);
   }
 
  public:
