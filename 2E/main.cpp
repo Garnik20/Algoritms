@@ -24,7 +24,7 @@ T Partition(std::vector<T>& arr, T left, T right, size_t pivot_ind,
 
 // Функция для выбора случайного опорного элемента (pivot)
 template <typename T>
-void ChosePivot(T left, T right, size_t& pivot) {
+void ChoosePivot(T left, T right, size_t& pivot) {
   T random_number = std::rand() % right;
   if (random_number >= left) {
     pivot = random_number;
