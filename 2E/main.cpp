@@ -69,7 +69,7 @@ int main() {
   size_t count;
   std::cin >> count;
   std::vector<uint32_t> arr(count);
-  
+
   Input(arr);
 
   // Сортируем
