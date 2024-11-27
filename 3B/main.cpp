@@ -45,12 +45,12 @@ class AVLTree {
   }
 
   // Обновление высоты узла
-  void UpdateHeight(AVLNode* node) {
+  static void UpdateHeight(AVLNode* node) {
     node->height = std::max(GetHeight(node->left), GetHeight(node->right)) + 1;
   }
 
   // Баланс узла
-  int32_t GetBalance(AVLNode* node) {
+  static int32_t GetBalance(AVLNode* node) {
     return node != nullptr ? GetHeight(node->left) - GetHeight(node->right) : 0;
   }
 
