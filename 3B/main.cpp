@@ -13,7 +13,7 @@ struct AVLNode {
 };
 
 class AVLTree {
-public:
+ public:
   AVLTree() : root_(nullptr) {}
 
   // Добавление ключа в дерево
@@ -25,26 +25,26 @@ public:
     return result != nullptr ? result->key : -1;
   }
 
-private:
+ private:
   AVLNode *root_;
 
   // Получение высоты узла
-  static int32_t GetHeight(AVLNode *node) {
+  int32_t GetHeight(AVLNode *node) {
     return node != nullptr ? node->height : 0;
   }
 
   // Обновление высоты узла
-  static void UpdateHeight(AVLNode *node) {
+  void UpdateHeight(AVLNode* node) {
     node->height = std::max(GetHeight(node->left), GetHeight(node->right)) + 1;
   }
 
   // Баланс узла
-  static int32_t GetBalance(AVLNode *node) {
+  int32_t GetBalance(AVLNode* node) {
     return node != nullptr ? GetHeight(node->left) - GetHeight(node->right) : 0;
   }
 
   // Правый поворот
-  static AVLNode *RotateRight(AVLNode *node) {
+  AVLNode* RotateRight(AVLNode* node) {
     AVLNode *node_l = node->left;
     AVLNode *node_lr = node_l->right;
     node_l->right = node;
@@ -55,7 +55,7 @@ private:
   }
 
   // Левый поворот
-  static AVLNode *RotateLeft(AVLNode *node) {
+  AVLNode* RotateLeft(AVLNode* node) {
     AVLNode *node_r = node->right;
     AVLNode *node_rl = node_r->left;
     node_r->left = node;
@@ -66,7 +66,7 @@ private:
   }
 
   // Вставка элемента с балансировкой
-  AVLNode *Insert(AVLNode *node, int32_t key) {
+  AVLNode* Insert(AVLNode* node, int32_t key) {
     if (node == nullptr) {
       return new AVLNode(key);
     }
@@ -75,7 +75,7 @@ private:
     } else if (key > node->key) {
       node->right = Insert(node->right, key);
     } else {
-      return node; // Если ключ уже существует, не добавляем его снова
+      return node;  // Если ключ уже существует, не добавляем его снова
     }
     UpdateHeight(node);
     int32_t balance = GetBalance(node);
@@ -103,8 +103,8 @@ private:
   }
 
   // Поиск следующего узла, не меньшего key
-  static AVLNode *FindNext(AVLNode *node, int32_t key) {
-    AVLNode *res = nullptr;
+  AVLNode* FindNext(AVLNode* node, int32_t key) {
+    AVLNode* res = nullptr;
     while (node != nullptr) {
       if (node->key >= key) {
         res = node;
@@ -117,7 +117,7 @@ private:
   }
 };
 
-void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
+void Requests(AVLTree& avl_tree, size_t count, std::vector<int32_t>& results) {
   int32_t last_y = 0;
   for (size_t i = 0; i < count; ++i) {
     char operation;
