@@ -34,7 +34,7 @@ class SplayTree {
   // Splay: перемещает узел к корню дерева
   Node* Splay(Node* root, const std::string& key) {
     // Если дерево пусто
-    if (!root || key == root->key) return root;
+    if (root == nullptr || key == root->key) return root;
 
     // Ключ находится в левом поддереве
     if (key < root->key) {
@@ -64,7 +64,7 @@ class SplayTree {
     // Ключ находится в правом поддереве
 
     // Если правое поддерево пусто
-    if (!root->right) return root;
+    if (root->right == nullptr) return root;
 
     // Zig-Zig правый правый
     if (key > root->right->key) {
@@ -103,9 +103,9 @@ class SplayTree {
 
   
   // Вставка новой пары
-  void insert(const std::string& key, const std::string& value) {
+  void Insert(const std::string& key, const std::string& value) {
     // Если дерево пустое, просто добавляем новый узел в корень
-    if (!root_) {
+    if (root_ == nullptr) {
       root_ = new Node(key, value);
       return;
     }
@@ -129,13 +129,13 @@ class SplayTree {
     }
 
     // Создаем новый узел
-    Node* newNode = new Node(key, value);
+    Node* new_node = new Node(key, value);
 
     // Вставляем новый узел на нужное место
     if (key < parent->key) {
-      parent->left = newNode;
+      parent->left = new_node;
     } else {
-      parent->right = newNode;
+      parent->right = new_node;
     }
 
     // Выполняем splay для перемещения нового узла в корень
@@ -143,7 +143,7 @@ class SplayTree {
   }
 
   // Поиск значения по ключу
-  std::string find(const std::string& key) {
+  std::string Find(const std::string& key) {
     // Перемешаем пару по значению key в корень
     root_ = Splay(root_, key);
 
@@ -158,8 +158,8 @@ void Input(size_t count, SplayTree& Tree) {
     std::string nickname;
     std::string car;
     std::cin >> nickname >> car;
-    Tree.insert(nickname, car);
-    Tree.insert(car, nickname);
+    Tree.Insert(nickname, car);
+    Tree.Insert(car, nickname);
   }
 }
 
@@ -170,7 +170,7 @@ void Requests(size_t reqs, SplayTree& Tree, std::vector<std::string>& results) {
     std::cin >> query;
 
     // Ишем по имени
-    std::string result = Tree.find(query);
+    std::string result = Tree.Find(query);
     results.emplace_back(result);
   }
 }
