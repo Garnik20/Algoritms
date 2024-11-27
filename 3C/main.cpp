@@ -63,7 +63,6 @@ class SplayTree {
         }
       }
 
-      // Вконце если не пуст левое поддерево делаем правый приворот
       return RightRot(root);
     }
     // Ключ находится в правом поддереве
@@ -90,8 +89,7 @@ class SplayTree {
       root->right = RightRot(root->right);
     }
     }
-    
-    // Вконце если не пуст правое поддерево делаем левый приворот
+
     return LeftRot(root);
   }
 
