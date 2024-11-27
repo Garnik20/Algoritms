@@ -15,6 +15,8 @@ struct AVLNode {
 class AVLTree {
  public:
   AVLTree() : root_(nullptr) {}
+  
+  ~AVLTree() { FreeNode(root_); }
 
   // Добавление ключа в дерево
   void Add(int32_t key) { root_ = Insert(root_, key); }
@@ -29,8 +31,17 @@ class AVLTree {
   AVLNode *root_;
 
   // Получение высоты узла
-  int32_t GetHeight(AVLNode *node) {
+  static int32_t GetHeight(AVLNode *node) {
     return node != nullptr ? node->height : 0;
+  }
+
+  // Освобождение памяти узла
+  void FreeNode(AVLNode* node) {
+    if (node != nullptr) {
+      FreeNode(node->left);
+      FreeNode(node->right);
+      delete node;
+    }
   }
 
   // Обновление высоты узла
@@ -103,7 +114,7 @@ class AVLTree {
   }
 
   // Поиск следующего узла, не меньшего key
-  AVLNode* FindNext(AVLNode* node, int32_t key) {
+  static AVLNode* FindNext(AVLNode* node, int32_t key) {
     AVLNode* res = nullptr;
     while (node != nullptr) {
       if (node->key >= key) {
@@ -138,7 +149,6 @@ void Requests(AVLTree& avl_tree, size_t count, std::vector<int32_t>& results) {
   }
 }
 
-
 int main() {
   size_t count;
   std::cin >> count;
@@ -147,10 +157,8 @@ int main() {
 
   Requests(avl_tree, count, results);
 
-  while (!results.empty()) {
-    for (int32_t& result : results) {
-      std::cout << result << "\n";
-    }
+  for (int32_t& result : results) {
+    std::cout << result << "\n";
   }
   return 0;
 }
