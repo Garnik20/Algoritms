@@ -44,7 +44,7 @@ private:
   }
 
   // Правый поворот
-  AVLNode *RotateRight(AVLNode *node) {
+  static AVLNode *RotateRight(AVLNode *node) {
     AVLNode *node_l = node->left;
     AVLNode *node_lr = node_l->right;
     node_l->right = node;
@@ -55,7 +55,7 @@ private:
   }
 
   // Левый поворот
-  AVLNode *RotateLeft(AVLNode *node) {
+  static AVLNode *RotateLeft(AVLNode *node) {
     AVLNode *node_r = node->right;
     AVLNode *node_rl = node_r->left;
     node_r->left = node;
@@ -103,7 +103,7 @@ private:
   }
 
   // Поиск следующего узла, не меньшего key
-  AVLNode *FindNext(AVLNode *node, int32_t key) {
+  static AVLNode *FindNext(AVLNode *node, int32_t key) {
     AVLNode *res = nullptr;
     while (node != nullptr) {
       if (node->key >= key) {
@@ -138,11 +138,6 @@ void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
   }
 }
 
-template <typename T> void Print(std::vector<T> &results) {
-  for (int32_t &result : results) {
-    std::cout << result << "\n";
-  }
-}
 
 int main() {
   size_t count;
@@ -152,6 +147,8 @@ int main() {
 
   Requests(avl_tree, count, results);
 
-  Print(results);
+  for (int32_t& result : results) {
+    std::cout << result << "\n";
+  }
   return 0;
 }
