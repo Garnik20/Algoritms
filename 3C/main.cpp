@@ -34,13 +34,16 @@ class SplayTree {
   // Splay: перемещает узел к корню дерева
   Node* Splay(Node* root, const std::string& key) {
     // Если дерево пусто
-    if (root == nullptr || key == root->key) return root;
+    if (root == nullptr || key == root->key) { 
+      return root;
+    }
 
     // Ключ находится в левом поддереве
     if (key < root->key) {
       // Если левое поддерево пусто
-      if (!root->left) return root;
-
+      if (root->left == nullptr) {
+        return root;
+      }
       // Zig-Zig левый левый
       if (key < root->left->key) {
         // Делаем сплей для левой ветки левой части
@@ -64,8 +67,9 @@ class SplayTree {
     // Ключ находится в правом поддереве
 
     // Если правое поддерево пусто
-    if (root->right == nullptr) return root;
-
+    if (root->right == nullptr) {
+      return root;
+    }
     // Zig-Zig правый правый
     if (key > root->right->key) {
     // Делаем сплей для правой ветки правой части
@@ -80,7 +84,9 @@ class SplayTree {
     root->right->left = Splay(root->right->left, key);
 
     // Потом правый приворот если он не пуст
-    if (root->right->left) root->right = RightRot(root->right);
+    if (root->right->left != nullptr) {
+      root->right = RightRot(root->right);
+    }
     }
     
     // Вконце если не пуст правое поддерево делаем левый приворот
@@ -114,7 +120,7 @@ class SplayTree {
     Node* current = root_;
 
     // Поиск подходящего места для вставки нового узла
-    while (current) {
+    while (current != nullptr) {
       parent = current;
       if (key < current->key) {
         current = current->left;
@@ -152,25 +158,25 @@ class SplayTree {
   }
 };
 
-void Input(size_t count, SplayTree& Tree) {
+void Input(size_t count, SplayTree& tree) {
   // Чтение пар
   for (size_t i = 0; i < count; ++i) {
     std::string nickname;
     std::string car;
     std::cin >> nickname >> car;
-    Tree.Insert(nickname, car);
-    Tree.Insert(car, nickname);
+    tree.Insert(nickname, car);
+    tree.Insert(car, nickname);
   }
 }
 
-void Requests(size_t reqs, SplayTree& Tree, std::vector<std::string>& results) {
+void Requests(size_t reqs, SplayTree& tree, std::vector<std::string>& results) {
   // Обработка запросов
   for (size_t i = 0; i < reqs; ++i) {
     std::string query;
     std::cin >> query;
 
     // Ишем по имени
-    std::string result = Tree.Find(query);
+    std::string result = tree.Find(query);
     results.emplace_back(result);
   }
 }
@@ -185,15 +191,15 @@ int main() {
   size_t count;
   std::cin >> count;
   if (count == 0) return 0;
-  SplayTree Tree;
+  SplayTree tree;
 
-  Input(count, Tree);
+  Input(count, tree);
   
   size_t reqs;
   std::cin >> reqs;
   std::vector<std::string> results(reqs);
 
-  Requests(reqs, Tree, results);
+  Requests(reqs, tree, results);
 
   Output(results);
 
