@@ -17,7 +17,7 @@ class Treap {
   Node* root_;
 
   // Функция для обновления размера поддерева
-  void UpdateSize(Node* node) {
+  static void UpdateSize(Node* node) {
     if (node != nullptr) {
       node->size = 1 + GetSize(node->left) + GetSize(node->right);
     }
@@ -112,7 +112,7 @@ class Treap {
   // Функция для поиска следующего элемента (Next)
   static int32_t Next(Node* node, int32_t value) {
     int32_t res = -1;
-    while (node) {
+    while (node != nullptr) {
       if (node->value > value) {
         res = node->value;
         node = node->left;
