@@ -120,8 +120,8 @@ void Requests(size_t count, Queue<T>& heap, std::vector<T>& results) {
 }
 
 template <typename T>
-void Print(std::vector<T> results) {
-  for (T& item : results) {
+void Print(const std::vector<T> results) {
+  for (const T& item : results) {
     if (item == -2) {
       std::cout << "ok\n";
     } else if (item == -1) {
