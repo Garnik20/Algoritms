@@ -55,7 +55,7 @@ class AVLTree {
   }
 
   // Правый поворот
-  AVLNode* RotateRight(AVLNode* node) {
+  static AVLNode* RotateRight(AVLNode* node) {
     AVLNode *node_l = node->left;
     AVLNode *node_lr = node_l->right;
     node_l->right = node;
@@ -66,7 +66,7 @@ class AVLTree {
   }
 
   // Левый поворот
-  AVLNode* RotateLeft(AVLNode* node) {
+  static AVLNode* RotateLeft(AVLNode* node) {
     AVLNode *node_r = node->right;
     AVLNode *node_rl = node_r->left;
     node_r->left = node;
