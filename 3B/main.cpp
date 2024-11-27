@@ -23,15 +23,15 @@ class AVLTree {
 
   // Поиск следующего элемента, не меньшего key
   int32_t Next(int32_t key) {
-    AVLNode *result = FindNext(root_, key);
+    AVLNode* result = FindNext(root_, key);
     return result != nullptr ? result->key : -1;
   }
 
  private:
-  AVLNode *root_;
+  AVLNode* root_;
 
   // Получение высоты узла
-  static int32_t GetHeight(AVLNode *node) {
+  static int32_t GetHeight(AVLNode* node) {
     return node != nullptr ? node->height : 0;
   }
 
@@ -56,8 +56,8 @@ class AVLTree {
 
   // Правый поворот
   static AVLNode* RotateRight(AVLNode* node) {
-    AVLNode *node_l = node->left;
-    AVLNode *node_lr = node_l->right;
+    AVLNode* node_l = node->left;
+    AVLNode* node_lr = node_l->right;
     node_l->right = node;
     node->left = node_lr;
     UpdateHeight(node);
@@ -67,8 +67,8 @@ class AVLTree {
 
   // Левый поворот
   static AVLNode* RotateLeft(AVLNode* node) {
-    AVLNode *node_r = node->right;
-    AVLNode *node_rl = node_r->left;
+    AVLNode* node_r = node->right;
+    AVLNode* node_rl = node_r->left;
     node_r->left = node;
     node->right = node_rl;
     UpdateHeight(node);
