@@ -5,13 +5,15 @@
 template <typename T, typename Comp = std::less<T>>
 class Queue {
  public:
+  explicit Queue(Comp comp = Comp()) : comp_(comp) {}
+
   // Добавление элемента в очередь
   T Enqueue(T num) {
     stack_1_.push_back(num);  // Добавляем элемент в stack_1_
     if (stack_1_min_.empty()) {
       stack_1_min_.push_back(num);  // Если stack_1_min_ пуст
     } else {
-      stack_1_min_.push_back(std::min(stack_1_min_.back(), num));
+      stack_1_min_.push_back(std::min(stack_1_min_.back(), num, comp_));
     }
     return -2;
   }
@@ -60,15 +62,13 @@ class Queue {
     }
 
     // Выбираем минимальный элемент между stack_1_min_ и stack_2_min_
-    T min_queue;
     if (stack_1_min_.empty()) {
-      min_queue = stack_2_min_.back();
+      return stack_2_min_.back();
     } else if (stack_2_min_.empty()) {
-      min_queue = stack_1_min_.back();
+      return stack_1_min_.back();
     } else {
-      min_queue = std::min(stack_1_min_.back(), stack_2_min_.back());
+      return std::min(stack_1_min_.back(), stack_2_min_.back(), comp_);
     }
-    return min_queue;
   }
 
  private:
@@ -76,6 +76,7 @@ class Queue {
   std::vector<T> stack_1_min_;  // Стек для отслеживания минимума в stack_1_
   std::vector<T> stack_2_;  // Стек для удаления элементов из очереди
   std::vector<T> stack_2_min_;  // Стек для отслеживания минимума в stack_2_
+  Comp comp_;  // Компаратор
 
   // Перемещает все элементы из stack_1_ в stack_2_
   void Transfer() {
@@ -89,7 +90,7 @@ class Queue {
       if (stack_2_min_.empty()) {
         stack_2_min_.emplace_back(el);
       } else {
-        stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el));
+        stack_2_min_.emplace_back(std::min(stack_2_min_.back(), el, comp_));
       }
     }
   }
@@ -118,15 +119,9 @@ void Requests(size_t count, Queue<T>& heap, std::vector<T>& results) {
   }
 }
 
-int main() {
-  size_t count;
-  std::cin >> count;
-  Queue<int32_t> heap;
-  std::vector<int32_t> results;
-
-  Requests(count, heap, results);
-
-  for (int32_t& item : results) {
+template <typename T>
+void Print(std::vector<T> results) {
+  for (T& item : results) {
     if (item == -2) {
       std::cout << "ok\n";
     } else if (item == -1) {
@@ -135,5 +130,17 @@ int main() {
       std::cout << item << "\n";
     }
   }
+}
+
+int main() {
+  size_t count;
+  std::cin >> count;
+  Queue<int32_t> heap;
+  std::vector<int32_t> results;
+
+  Requests(count, heap, results);
+
+  Print(results);
+
   return 0;
 }
