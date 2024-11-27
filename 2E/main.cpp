@@ -4,7 +4,7 @@
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
 template <typename T, typename Comparator>
-T Partition(std::vector<T>& arr, T left, T right, size_t pivot_ind,
+T Partition(std::vector<T>& arr, size_t left, size_t right, size_t pivot_ind,
             Comparator comp) {
   T pivot = arr[pivot_ind];
   std::swap(arr[pivot_ind], arr[right]);  // Переместим опорный элемент в конец
@@ -24,7 +24,7 @@ T Partition(std::vector<T>& arr, T left, T right, size_t pivot_ind,
 
 // Функция для выбора случайного опорного элемента (pivot)
 template <typename T>
-void ChoosePivot(T left, T right, size_t& pivot) {
+void ChoosePivot(size_t left, size_t right, size_t& pivot) {
   T random_number = std::rand() % right;
   if (random_number >= left) {
     pivot = random_number;
@@ -35,7 +35,7 @@ void ChoosePivot(T left, T right, size_t& pivot) {
 
 // Сортировка
 template <typename T, typename Comparator = std::less<T>>
-void QuickSort(std::vector<T>& arr, T left, T right,
+void QuickSort(std::vector<T>& arr, size_t left, size_t right,
                Comparator comp = Comparator()) {
   if (left < right) {
     size_t pivot_ind;
@@ -58,8 +58,8 @@ void Input(std::vector<T> arr) {
 }
 
 template <typename T>
-void Print(std::vector<T> arr) {
-  for (T& item : arr) {
+void Print(const std::vector<T>& arr) {
+  for (const T& item : arr) {
     std::cout << item << " ";
   }
   std::cout << '\n';
