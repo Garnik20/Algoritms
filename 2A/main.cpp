@@ -10,7 +10,7 @@ class MinHeap {
 
   // Функция SiftUp поднимает элемент вверх по куче
   void SiftUp(size_t index) {
-    while (index > 0 && comp_(heap_[index], heap_[(index - 1) / 2])) {
+    while (index > 0 && comp_(heap_[(index - 1) / 2], heap_[index])) {
       std::swap(heap_[index], heap_[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
@@ -22,10 +22,10 @@ class MinHeap {
     size_t right_son = index * 2 + 2;
     size_t best = index;
 
-    if (left_son < heap_.size() && comp_(heap_[left_son], heap_[best])) {
+    if (left_son < heap_.size() && comp_(heap_[best], heap_[left_son])) {
       best = left_son;
     }
-    if (right_son < heap_.size() && comp_(heap_[right_son], heap_[best])) {
+    if (right_son < heap_.size() && comp_(heap_[best], heap_[right_son])) {
       best = right_son;
     }
     return best;
@@ -112,7 +112,7 @@ void Requests(MinHeap<T, Comparator>& heap, size_t count,
 
 // Основная функция
 int main() {
-  MinHeap<int64_t, std::greater<int64_t>> heap;
+  MinHeap<int64_t, std::less<int64_t>> heap;
   size_t count;
   std::cin >> count;
 
