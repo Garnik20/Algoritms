@@ -11,7 +11,11 @@ class Treap {
     Node* right;
 
     Node(int32_t val)
-        : value(val), priority(rand()), size(1), left(nullptr), right(nullptr) {}
+        : value(val),
+          priority(rand()),
+          size(1),
+          left(nullptr),
+          right(nullptr) {}
   };
 
   Node* root_;
@@ -66,8 +70,8 @@ class Treap {
       return node;
     }
     Node* new_node = new Node(value);
-    Node *left;
-    Node *right;
+    Node* left;
+    Node* right;
     Split(node, value, left, right);
     left = Merge(left, new_node);
     return Merge(left, right);
@@ -97,7 +101,7 @@ class Treap {
 
   // Функция для поиска элемента в дереве
   bool Exists(Node* node, int32_t value) {
-    if (node  == nullptr) {
+    if (node == nullptr) {
       return false;
     }
     if (node->value == value) {
