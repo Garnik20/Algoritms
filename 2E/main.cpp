@@ -3,17 +3,18 @@
 #include <vector>
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
-template <typename T>
-T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
-  T pivot = arr[ind];
-  std::swap(arr[ind], arr[right]);
+template <typename T, typename Comparator>
+T Partition(std::vector<T>& arr, T left, T right, size_t pivot_ind,
+            Comparator comp) {
+  T pivot = arr[pivot_ind];
+  std::swap(arr[pivot_ind], arr[right]);  // Переместим опорный элемент в конец
   T ind_pivot = left;
 
-  // Перемещаем элементы меньше опорного в левую часть
+  // Перемещаем элементы, удовлетворяющие компаратору, в левую часть
   for (T j = left; j < right; ++j) {
-    if (arr[j] < pivot) {
+    if (comp(arr[j], pivot)) {
       std::swap(arr[ind_pivot], arr[j]);
-      ind_pivot++;
+      ++ind_pivot;
     }
   }
   std::swap(arr[ind_pivot],
@@ -21,6 +22,7 @@ T Partittion(std::vector<T>& arr, T left, T right, size_t ind) {
   return ind_pivot;
 }
 
+// Функция для выбора случайного опорного элемента (pivot)
 template <typename T>
 void ChosePivot(T left, T right, size_t& pivot) {
   T random_number = std::rand() % right;
@@ -37,31 +39,43 @@ void QuickSort(std::vector<T>& arr, T left, T right,
                Comparator comp = Comparator()) {
   if (left < right) {
     size_t pivot_ind;
-    ChosePivot(left, right, pivot_ind);
+    ChoosePivot(left, right, pivot_ind);
 
-    // Разбиваем массив на части относительно (pivot)
-    T partition_ind = Partittion<T>(arr, left, right, pivot_ind);
+    // Разбиваем массив на части относительно pivot
+    T partition_ind = Partition(arr, left, right, pivot_ind, comp);
 
     // Рекурсивно сортируем левую и правую части
-    QuickSort<T>(arr, left, partition_ind - 1, comp);
-    QuickSort<T>(arr, partition_ind + 1, right, comp);
+    QuickSort(arr, left, partition_ind - 1, comp);
+    QuickSort(arr, partition_ind + 1, right, comp);
   }
+}
+
+template <typename T>
+void Input(std::vector<T> arr) {
+  for (T& item : arr) {
+    std::cin << item;
+  }
+}
+
+template <typename T>
+void Print(std::vector<T> arr) {
+  for (T& item : arr) {
+    std::cout << item << " ";
+  }
+  std::cout << '\n';
 }
 
 int main() {
   size_t count;
   std::cin >> count;
   std::vector<uint32_t> arr(count);
-  for (uint32_t item : arr) {
-    std::cin >> item;
-  }
+  
+  Input(arr);
 
-  QuickSort<uint32_t>(arr, 0, arr.size() - 1);
+  // Сортируем
+  QuickSort<uint32_t>(arr, 0, arr.size() - 1, std::less<uint32_t>());
 
-  for (uint32_t item : arr) {
-    std::cout << item << " ";
-  }
-  std::cout << '\n';
+  Print(arr);
 
   return 0;
 }
