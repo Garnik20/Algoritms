@@ -6,8 +6,8 @@ const int32_t kHex = 1000000000;
 struct AVLNode {
   int32_t key;
   int32_t height;
-  AVLNode *left;
-  AVLNode *right;
+  AVLNode* left;
+  AVLNode* right;
   AVLNode(int32_t new_key)
       : key(new_key), height(1), left(nullptr), right(nullptr) {}
 };
@@ -15,7 +15,7 @@ struct AVLNode {
 class AVLTree {
  public:
   AVLTree() : root_(nullptr) {}
-  
+
   ~AVLTree() { FreeNode(root_); }
 
   // Добавление ключа в дерево
