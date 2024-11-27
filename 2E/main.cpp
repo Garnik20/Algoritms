@@ -4,14 +4,14 @@
 
 // Функция для разделения массива вокруг опорного элемента (pivot)
 template <typename T, typename Comparator>
-T Partition(std::vector<T>& arr, size_t left, size_t right, size_t pivot_ind,
+size_t Partition(std::vector<T>& arr, size_t left, size_t right, size_t pivot_ind,
             Comparator comp) {
   T pivot = arr[pivot_ind];
   std::swap(arr[pivot_ind], arr[right]);  // Переместим опорный элемент в конец
-  T ind_pivot = left;
+  size_t ind_pivot = left;
 
   // Перемещаем элементы, удовлетворяющие компаратору, в левую часть
-  for (T j = left; j < right; ++j) {
+  for (size_t j = left; j < right; ++j) {
     if (comp(arr[j], pivot)) {
       std::swap(arr[ind_pivot], arr[j]);
       ++ind_pivot;
@@ -41,7 +41,7 @@ void QuickSort(std::vector<T>& arr, size_t left, size_t right,
     ChoosePivot(left, right, pivot_ind);
 
     // Разбиваем массив на части относительно pivot
-    T partition_ind = Partition(arr, left, right, pivot_ind, comp);
+    size_t partition_ind = Partition(arr, left, right, pivot_ind, comp);
 
     // Рекурсивно сортируем левую и правую части
     QuickSort(arr, left, partition_ind - 1, comp);
@@ -50,7 +50,7 @@ void QuickSort(std::vector<T>& arr, size_t left, size_t right,
 }
 
 template <typename T>
-void Input(std::vector<T> arr) {
+void Input(std::vector<T>& arr) {
   for (T& item : arr) {
     std::cin >> item;
   }
