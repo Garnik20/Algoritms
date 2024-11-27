@@ -192,7 +192,9 @@ void Output(std::vector<std::string>& results) {
 int main() {
   size_t count;
   std::cin >> count;
-  if (count == 0) return 0;
+  if (count == 0) {
+    return 0;
+  }
   SplayTree tree;
 
   Input(count, tree);
