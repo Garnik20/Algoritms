@@ -1,19 +1,16 @@
 #include <iostream>
-#include <map>
-#include <string>
 #include <vector>
+#include <string>
 
 template <typename T, typename Comparator = std::less<T>>
-// Класс min_heap - минимальнaq кучa
 class MinHeap {
  private:
-  // Массив кучи
-  std::vector<T> heap_;
-  Comparator comp_;  // Экземпляр компаратора
+  std::vector<T> heap_; // Хранилище элементов кучи
+  Comparator comp_;     // Экземпляр компаратора
 
-  // Функция sift_up поднимает элемент вверх по куче
+  // Функция SiftUp поднимает элемент вверх по куче
   void SiftUp(size_t index) {
-    while (index > 0 && heap_[index] < heap_[(index - 1) / 2]) {
+    while (index > 0 && comp_(heap_[index], heap_[(index - 1) / 2])) {
       std::swap(heap_[index], heap_[(index - 1) / 2]);
       index = (index - 1) / 2;
     }
@@ -23,24 +20,24 @@ class MinHeap {
   size_t MinOfSons(size_t index) {
     size_t left_son = index * 2 + 1;
     size_t right_son = index * 2 + 2;
-    size_t smallest = index;
+    size_t best = index;
 
-    if (left_son < heap_.size() && heap_[left_son] < heap_[smallest]) {
-      smallest = left_son;
+    if (left_son < heap_.size() && comp_(heap_[left_son], heap_[best])) {
+      best = left_son;
     }
-    if (right_son < heap_.size() && heap_[right_son] < heap_[smallest]) {
-      smallest = right_son;
+    if (right_son < heap_.size() && comp_(heap_[right_son], heap_[best])) {
+      best = right_son;
     }
-    return smallest;
+    return best;
   }
 
   // Функция SiftDown опускает элемент вниз по куче
   void SiftDown(size_t index) {
-    size_t smallest = MinOfSons(index);
-    while (index != smallest) {
-      std::swap(heap_[index], heap_[smallest]);
-      index = smallest;
-      smallest = MinOfSons(index);
+    size_t best = MinOfSons(index);
+    while (index != best) {
+      std::swap(heap_[index], heap_[best]);
+      index = best;
+      best = MinOfSons(index);
     }
   }
 
@@ -49,14 +46,14 @@ class MinHeap {
   explicit MinHeap(Comparator comp = Comparator()) : comp_(comp) {}
 
   void Insert(T value) {
-    heap_.push_back(value);  // Добавляем элемент в конец кучи.
-    SiftUp(heap_.size() - 1);  // Восстанавливаем свойства кучи.
+    heap_.push_back(value);
+    SiftUp(heap_.size() - 1);
   }
 
-  // Метод getMin возвращает минимальный элемент из кучи.
+  // Метод GetMin возвращает минимальный элемент
   T GetMin() { return heap_[0]; }
 
-  // Метод extractMin удаляет минимальный элемент из кучи.
+  // Метод ExtractMin удаляет минимальный элемент
   void ExtractMin() {
     std::swap(heap_[0], heap_[heap_.size() - 1]);
     heap_.pop_back();
@@ -65,57 +62,62 @@ class MinHeap {
     }
   }
 
-  // Метод decreaseKey уменьшает значение элемента в куче.
+  // Метод DecreaseKey уменьшает значение элемента
   void DecreaseKey(T value, T det) {
-    // Находим индекс элемента с указанным значением.
-    size_t count = 0;
-    while (count < heap_.size() && heap_[count] != value) {
-      ++count;
+    size_t index = 0;
+    while (index < heap_.size() && heap_[index] != value) {
+      ++index;
     }
-    // Уменьшаем значение и поднимаем его, чтобы сохранить структуру кучи.
-    heap_[count] -= det;
-    SiftUp(count);
+    if (index < heap_.size()) {
+      heap_[index] -= det; // Уменьшаем значение
+      SiftUp(index);       // Поднимаем элемент, чтобы восстановить кучу
+    }
   }
 };
+
+// Функция для вывода
 template <typename T>
 void Print(std::vector<T>& result) {
-  for (int64_t item : result) {
+  for (T& item : result) {
     std::cout << item << "\n";
   }
 }
 
-template <typename T>
-void Requests(MinHeap<T>& heap, size_t count, std::vector<T>& help_arr,
+// Функция обработки запросов
+template <typename T, typename Comparator>
+void Requests(MinHeap<T, Comparator>& heap, size_t count, std::vector<T>& help_arr,
               std::vector<T>& result) {
   for (size_t i = 0; i < count; ++i) {
-    std::string str;
-    std::cin >> str;
+    std::string command;
+    std::cin >> command;
 
-    if (str == "insert") {
-      int64_t value;
+    if (command == "insert") {
+      T value;
       std::cin >> value;
       heap.Insert(value);
       help_arr[i + 1] = value;
-    } else if (str == "getMin") {
+    } else if (command == "getMin") {
       result.emplace_back(heap.GetMin());
-    } else if (str == "extractMin") {
+    } else if (command == "extractMin") {
       heap.ExtractMin();
-    } else if (str == "decreaseKey") {
-      int64_t det;
-      size_t ind;
-      std::cin >> ind >> det;  // Считываем индекс и значение для уменьшения.
-      heap.DecreaseKey(help_arr[ind], det);  // Уменьшаем значение в куче.
-      help_arr[ind] -= det;  // Обновляем значение в словаре.
+    } else if (command == "decreaseKey") {
+      size_t index;
+      T det;
+      std::cin >> index >> det;
+      heap.DecreaseKey(help_arr[index], det);
+      help_arr[index] -= det;
     }
   }
 }
 
+// Основная функция
 int main() {
-  MinHeap<int64_t> heap;
+  // Пример с пользовательским компаратором для обратного порядка
+  MinHeap<int64_t, std::greater<int64_t>> heap; // Передаём std::greater для максимальной кучи
   size_t count;
   std::cin >> count;
-  // Вектор для хранения вставленных элементов и их индексов.
-  std::vector<int64_t> help_arr(count + 1);
+
+  std::vector<int64_t> help_arr(count + 1); // Хранилище вставленных элементов
   std::vector<int64_t> result;
 
   Requests(heap, count, help_arr, result);
