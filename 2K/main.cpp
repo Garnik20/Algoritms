@@ -64,11 +64,11 @@ class Queue {
     // Выбираем минимальный элемент между stack_1_min_ и stack_2_min_
     if (stack_1_min_.empty()) {
       return stack_2_min_.back();
-    } else if (stack_2_min_.empty()) {
-      return stack_1_min_.back();
-    } else {
-      return std::min(stack_1_min_.back(), stack_2_min_.back(), comp_);
     }
+    if (stack_2_min_.empty()) {
+      return stack_1_min_.back();
+    }
+    return std::min(stack_1_min_.back(), stack_2_min_.back(), comp_);
   }
 
  private:
