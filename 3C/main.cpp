@@ -58,7 +58,9 @@ class SplayTree {
         root->left->right = Splay(root->left->right, key);
 
         // Потом левый приворот если он не пуст
-        if (root->left->right) root->left = LeftRot(root->left);
+        if (root->left->right != nullptr) {
+          root->left = LeftRot(root->left);
+        }
       }
 
       // Вконце если не пуст левое поддерево делаем правый приворот
