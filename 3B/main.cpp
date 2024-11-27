@@ -147,8 +147,10 @@ int main() {
 
   Requests(avl_tree, count, results);
 
-  for (int32_t& result : results) {
-    std::cout << result << "\n";
+  while (!results.empty()) {
+    for (int32_t& result : results) {
+      std::cout << result << "\n";
+    }
   }
   return 0;
 }
