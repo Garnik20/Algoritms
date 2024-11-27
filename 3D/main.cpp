@@ -18,17 +18,17 @@ class Treap {
 
   // Функция для обновления размера поддерева
   void UpdateSize(Node* node) {
-    if (node) {
+    if (node != nullptr) {
       node->size = 1 + GetSize(node->left) + GetSize(node->right);
     }
   }
 
   // Функция для получения размера поддерева
-  size_t GetSize(Node* node) { return node != nullptr ? node->size : 0; }
+  static size_t GetSize(Node* node) { return node != nullptr ? node->size : 0; }
 
   // Split - разделяет дерево на две части по значению
   void Split(Node* node, int32_t value, Node*& left, Node*& right) {
-    if (!node) {
+    if (node == nullptr) {
       left = right = nullptr;
       return;
     }
@@ -46,27 +46,30 @@ class Treap {
 
   // Merge - сливает два дерева
   Node* Merge(Node* left, Node* right) {
-    if (!left || !right) return left ? left : right;
+    if (left == nullptr || right == nullptr) {
+      return left != nullptr ? left : right;
+    }
 
     if (left->priority > right->priority) {
       left->right = Merge(left->right, right);
       UpdateSize(left);
       return left;
-    } else {
-      right->left = Merge(left, right->left);
-      UpdateSize(right);
-      return right;
     }
+    right->left = Merge(left, right->left);
+    UpdateSize(right);
+    return right;
   }
 
   // Вставка нового элемента в дерево
   Node* Insert(Node* node, int value) {
-    if (Exists(node, value))
-      return node;  // Если значение существует, ничего не делаем
-    Node* newNode = new Node(value);
-    Node *left, *right;
+    if (Exists(node, value)) {
+      return node;
+    }
+    Node* new_node = new Node(value);
+    Node *left;
+    Node *right;
     Split(node, value, left, right);
-    left = Merge(left, newNode);
+    left = Merge(left, new_node);
     return Merge(left, right);
   }
 
@@ -80,7 +83,9 @@ class Treap {
       Node* temp = Merge(node->left, node->right);
       delete node;
       return temp;
-    } else if (value < node->value) {
+    }
+
+    if (value < node->value) {
       node->left = Deletenode(node->left, value);
     } else {
       node->right = Deletenode(node->right, value);
@@ -92,7 +97,7 @@ class Treap {
 
   // Функция для поиска элемента в дереве
   bool Exists(Node* node, int32_t value) {
-    if (!node) {
+    if (node  == nullptr) {
       return false;
     }
     if (node->value == value) {
@@ -105,7 +110,7 @@ class Treap {
   }
 
   // Функция для поиска следующего элемента (Next)
-  int32_t Next(Node* node, int32_t value) {
+  static int32_t Next(Node* node, int32_t value) {
     int32_t res = -1;
     while (node) {
       if (node->value > value) {
@@ -119,9 +124,9 @@ class Treap {
   }
 
   // Функция для поиска предыдущего элемента (Prev)
-  int32_t Prev(Node* node, int32_t value) {
+  static int32_t Prev(Node* node, int32_t value) {
     int32_t res = -1;
-    while (node) {
+    while (node != nullptr) {
       if (node->value < value) {
         res = node->value;
         node = node->right;
@@ -137,18 +142,28 @@ class Treap {
     if (node == nullptr) {
       return -1;
     }
-    size_t leftSize = GetSize(node->left);
-    if (prir < leftSize) {
+    size_t left_size = GetSize(node->left);
+    if (prir < left_size) {
       return Kth(node->left, prir);
-    } else if (prir == leftSize) {
+    }
+    if (prir == left_size) {
       return node->value;
-    } else {
-      return Kth(node->right, prir - leftSize - 1);
+    }
+    return Kth(node->right, prir - left_size - 1);
+  }
+
+  void FullDell(Node* node) {
+    if (node != nullptr) {
+      FullDell(node->left);
+      FullDell(node->right);
+      delete node;
     }
   }
 
  public:
   Treap() : root_(nullptr) {}
+
+  ~Treap() { FullDell(root_); }
 
   // Вставка элемента с проверкой существования
   void Insert(int32_t value) { root_ = Insert(root_, value); }
@@ -172,7 +187,7 @@ class Treap {
 void Requests(Treap& tree, std::vector<int32_t>& results) {
   std::string op;
   int32_t x;
-  size_t k;
+  size_t prir;
   while (std::cin >> op) {
     if (op == "Insert") {
       std::cin >> x;
@@ -196,8 +211,8 @@ void Requests(Treap& tree, std::vector<int32_t>& results) {
       int32_t result = tree.Prev(x);
       results.emplace_back(result);
     } else if (op == "Kth") {
-      std::cin >> k;
-      int32_t result = tree.Kth(k);
+      std::cin >> prir;
+      int32_t result = tree.Kth(prir);
       results.emplace_back(result);
     }
   }
@@ -214,7 +229,6 @@ void Print(const std::vector<int32_t>& results) {
     } else {
       std::cout << item << "\n";
     }
-    
   }
 }
 
