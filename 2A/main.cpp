@@ -1,12 +1,12 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 
 template <typename T, typename Comparator = std::less<T>>
 class MinHeap {
  private:
-  std::vector<T> heap_; // Хранилище элементов кучи
-  Comparator comp_;     // Экземпляр компаратора
+  std::vector<T> heap_;  // Хранилище элементов кучи
+  Comparator comp_;      // Экземпляр компаратора
 
   // Функция SiftUp поднимает элемент вверх по куче
   void SiftUp(size_t index) {
@@ -69,8 +69,8 @@ class MinHeap {
       ++index;
     }
     if (index < heap_.size()) {
-      heap_[index] -= det; // Уменьшаем значение
-      SiftUp(index);       // Поднимаем элемент, чтобы восстановить кучу
+      heap_[index] -= det;  // Уменьшаем значение
+      SiftUp(index);  // Поднимаем элемент, чтобы восстановить кучу
     }
   }
 };
@@ -85,8 +85,8 @@ void Print(std::vector<T>& result) {
 
 // Функция обработки запросов
 template <typename T, typename Comparator>
-void Requests(MinHeap<T, Comparator>& heap, size_t count, std::vector<T>& help_arr,
-              std::vector<T>& result) {
+void Requests(MinHeap<T, Comparator>& heap, size_t count,
+              std::vector<T>& help_arr, std::vector<T>& result) {
   for (size_t i = 0; i < count; ++i) {
     std::string command;
     std::cin >> command;
@@ -112,12 +112,11 @@ void Requests(MinHeap<T, Comparator>& heap, size_t count, std::vector<T>& help_a
 
 // Основная функция
 int main() {
-  // Пример с пользовательским компаратором для обратного порядка
-  MinHeap<int64_t, std::greater<int64_t>> heap; // Передаём std::greater для максимальной кучи
+  MinHeap<int64_t, std::greater<int64_t>> heap;
   size_t count;
   std::cin >> count;
 
-  std::vector<int64_t> help_arr(count + 1); // Хранилище вставленных элементов
+  std::vector<int64_t> help_arr(count + 1);
   std::vector<int64_t> result;
 
   Requests(heap, count, help_arr, result);
