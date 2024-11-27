@@ -34,12 +34,12 @@ private:
   }
 
   // Обновление высоты узла
-  void UpdateHeight(AVLNode *node) {
+  static void UpdateHeight(AVLNode *node) {
     node->height = std::max(GetHeight(node->left), GetHeight(node->right)) + 1;
   }
 
   // Баланс узла
-  int32_t GetBalance(AVLNode *node) {
+  static int32_t GetBalance(AVLNode *node) {
     return node != nullptr ? GetHeight(node->left) - GetHeight(node->right) : 0;
   }
 
@@ -67,25 +67,27 @@ private:
 
   // Вставка элемента с балансировкой
   AVLNode *Insert(AVLNode *node, int32_t key) {
-    if (node == nullptr)
+    if (node == nullptr) {
       return new AVLNode(key);
-
-    if (key < node->key)
+    }
+    if (key < node->key) {
       node->left = Insert(node->left, key);
-    else if (key > node->key)
+    } else if (key > node->key) {
       node->right = Insert(node->right, key);
-    else
+    } else {
       return node; // Если ключ уже существует, не добавляем его снова
-
+    }
     UpdateHeight(node);
     int32_t balance = GetBalance(node);
 
     // LL
-    if (balance > 1 && key < node->left->key)
+    if (balance > 1 && key < node->left->key) {
       return RotateRight(node);
+    }
     // RR
-    if (balance < -1 && key > node->right->key)
+    if (balance < -1 && key > node->right->key) {
       return RotateLeft(node);
+    }
     // LR
     if (balance > 1 && key > node->left->key) {
       node->left = RotateLeft(node->left);
@@ -136,6 +138,12 @@ void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
   }
 }
 
+template <typename T> void Print(std::vector<T> &results) {
+  for (int32_t &result : results) {
+    std::cout << result << "\n";
+  }
+}
+
 int main() {
   size_t count;
   std::cin >> count;
@@ -144,9 +152,6 @@ int main() {
 
   Requests(avl_tree, count, results);
 
-  for (int32_t &result : results) {
-    std::cout << result << "\n";
-  }
-
+  Print(results);
   return 0;
 }
