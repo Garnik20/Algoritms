@@ -72,7 +72,9 @@ class Treap {
 
   // Удаление узла с заданным значением
   Node* Deletenode(Node* node, int32_t value) {
-    if (!node) return nullptr;
+    if (node == nullptr) {
+      return nullptr;
+    }
 
     if (node->value == value) {
       Node* temp = Merge(node->left, node->right);
@@ -167,9 +169,7 @@ class Treap {
   int Kth(int k) { return Kth(root_, k); }
 };
 
-int main() {
-  Treap tree;
-
+void Requests(Treap& tree, std::vector<int32_t>& results) {
   std::string op;
   int32_t x, k;
   while (std::cin >> op) {
@@ -187,14 +187,14 @@ int main() {
         std::cout << "false\n";
     } else if (op == "Next") {
       std::cin >> x;
-      int result = tree.Next(x);
+      int32_t result = tree.Next(x);
       if (result == -1)
         std::cout << "none\n";
       else
         std::cout << result << '\n';
     } else if (op == "Prev") {
       std::cin >> x;
-      int result = tree.Prev(x);
+      int32_t result = tree.Prev(x);
       if (result == -1)
         std::cout << "none\n";
       else
@@ -208,6 +208,12 @@ int main() {
         std::cout << result << '\n';
     }
   }
+}
+
+int main() {
+  Treap tree;
+
+  
 
   return 0;
 }
