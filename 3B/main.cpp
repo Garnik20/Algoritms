@@ -133,7 +133,7 @@ void Requests(AVLTree &avl_tree, size_t count, std::vector<int32_t> &results) {
       last_y = 0;
     } else if (operation == '?') {
       last_y = avl_tree.Next(value);
-      results.emplace_back(last_y);
+      results.push_back(last_y);
     }
   }
 }
