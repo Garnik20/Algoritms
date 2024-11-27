@@ -34,7 +34,7 @@ class SplayTree {
   // Splay: перемещает узел к корню дерева
   Node* Splay(Node* root, const std::string& key) {
     // Если дерево пусто
-    if (root == nullptr || key == root->key) { 
+    if (root == nullptr || key == root->key) {
       return root;
     }
 
@@ -73,21 +73,21 @@ class SplayTree {
     }
     // Zig-Zig правый правый
     if (key > root->right->key) {
-    // Делаем сплей для правой ветки правой части
-    root->right->right = Splay(root->right->right, key);
+      // Делаем сплей для правой ветки правой части
+      root->right->right = Splay(root->right->right, key);
 
-    // Потом левый приворот
-    root = LeftRot(root);
+      // Потом левый приворот
+      root = LeftRot(root);
     }
     // Zig-Zag правый левый
     else if (key < root->right->key) {
-    // Делаем сплей для левой ветки правой части
-    root->right->left = Splay(root->right->left, key);
+      // Делаем сплей для левой ветки правой части
+      root->right->left = Splay(root->right->left, key);
 
-    // Потом правый приворот если он не пуст
-    if (root->right->left != nullptr) {
-      root->right = RightRot(root->right);
-    }
+      // Потом правый приворот если он не пуст
+      if (root->right->left != nullptr) {
+        root->right = RightRot(root->right);
+      }
     }
 
     return LeftRot(root);
@@ -107,7 +107,6 @@ class SplayTree {
     }
   }
 
-  
   // Вставка новой пары
   void Insert(const std::string& key, const std::string& value) {
     // Если дерево пустое, просто добавляем новый узел в корень
@@ -182,9 +181,9 @@ void Requests(size_t reqs, SplayTree& tree, std::vector<std::string>& results) {
 }
 
 void Output(std::vector<std::string>& results) {
-    for(std::string& item : results) {
-        std::cout << item << '\n';
-    }
+  for (std::string& item : results) {
+    std::cout << item << '\n';
+  }
 }
 
 int main() {
@@ -196,7 +195,7 @@ int main() {
   SplayTree tree;
 
   Input(count, tree);
-  
+
   size_t reqs;
   std::cin >> reqs;
   std::vector<std::string> results(reqs);
