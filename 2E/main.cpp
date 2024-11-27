@@ -53,7 +53,7 @@ void QuickSort(std::vector<T>& arr, T left, T right,
 template <typename T>
 void Input(std::vector<T> arr) {
   for (T& item : arr) {
-    std::cin << item;
+    std::cin >> item;
   }
 }
 
