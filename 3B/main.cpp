@@ -5,7 +5,7 @@ const int32_t kHex = 1000000000;
 
 struct AVLNode {
   int32_t key;
-  int32_t height;
+  size_t height;
   AVLNode* left;
   AVLNode* right;
   AVLNode(int32_t new_key)
@@ -31,7 +31,7 @@ class AVLTree {
   AVLNode* root_;
 
   // Получение высоты узла
-  static int32_t GetHeight(AVLNode* node) {
+  static size_t GetHeight(AVLNode* node) {
     return node != nullptr ? node->height : 0;
   }
 
@@ -51,7 +51,7 @@ class AVLTree {
 
   // Баланс узла
   static int32_t GetBalance(AVLNode* node) {
-    return node != nullptr ? GetHeight(node->left) - GetHeight(node->right) : 0;
+    return node != nullptr ? static_cast<int32_t>(GetHeight(node->left)) - static_cast<int32_t>(GetHeight(node->right)) : 0;
   }
 
   // Правый поворот
@@ -74,6 +74,18 @@ class AVLTree {
     UpdateHeight(node);
     UpdateHeight(node_r);
     return node_r;
+  }
+
+  // Правый поворот
+  static AVLNode* BigRotateRight(AVLNode* node) {
+    node->right = RotateRight(node->right);
+    return RotateLeft(node);
+  }
+
+  // Левый поворот
+  static AVLNode* BigRotateLeft(AVLNode* node) {
+    node->left = RotateLeft(node->left);
+    return RotateRight(node);
   }
 
   // Вставка элемента с балансировкой
@@ -101,13 +113,11 @@ class AVLTree {
     }
     // LR
     if (balance > 1 && key > node->left->key) {
-      node->left = RotateLeft(node->left);
-      return RotateRight(node);
+      BigRotateLeft(node);
     }
     // RL
     if (balance < -1 && key < node->right->key) {
-      node->right = RotateRight(node->right);
-      return RotateLeft(node);
+      BigRotateRight(node);
     }
 
     return node;
@@ -149,6 +159,12 @@ void Requests(AVLTree& avl_tree, size_t count, std::vector<int32_t>& results) {
   }
 }
 
+void Print(std::vector<int32_t>& results) {
+  for (int32_t& result : results) {
+    std::cout << result << "\n";
+  }
+}
+
 int main() {
   size_t count;
   std::cin >> count;
@@ -157,8 +173,6 @@ int main() {
 
   Requests(avl_tree, count, results);
 
-  for (int32_t& result : results) {
-    std::cout << result << "\n";
-  }
+  Print(results);
   return 0;
 }
