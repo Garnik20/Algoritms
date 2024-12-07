@@ -51,7 +51,9 @@ class AVLTree {
 
   // Баланс узла
   static int32_t GetBalance(AVLNode* node) {
-    return node != nullptr ? static_cast<int32_t>(GetHeight(node->left)) - static_cast<int32_t>(GetHeight(node->right)) : 0;
+    return node != nullptr ? static_cast<int32_t>(GetHeight(node->left)) -
+                                 static_cast<int32_t>(GetHeight(node->right))
+                           : 0;
   }
 
   // Правый поворот
