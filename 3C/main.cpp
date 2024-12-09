@@ -2,16 +2,16 @@
 #include <string>
 #include <vector>
 
-using NodePtr = Node*;
-
 struct Node {
   std::string key;
   std::string value;
-  NodePtr left;
-  NodePtr right;
+  Node* left;
+  Node* right;
   Node(const std::string& key, const std::string& val)
       : key(key), value(val), left(nullptr), right(nullptr) {}
 };
+
+using NodePtr = Node*;
 
 class SplayTree {
  private:
