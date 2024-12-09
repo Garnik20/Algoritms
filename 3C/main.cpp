@@ -179,7 +179,7 @@ bool Input(SplayTree& tree) {
 void Requests(SplayTree& tree, std::vector<std::string>& results) {
   size_t reqs;
   std::cin >> reqs;
-  std::vector<std::string> results(reqs);
+  results.reserve(reqs);
   // Обработка запросов
   for (size_t i = 0; i < reqs; ++i) {
     std::string query;
