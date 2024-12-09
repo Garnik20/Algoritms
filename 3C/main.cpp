@@ -2,37 +2,39 @@
 #include <string>
 #include <vector>
 
+using NodePtr = Node*;
+
 struct Node {
   std::string key;
   std::string value;
-  Node* left;
-  Node* right;
+  NodePtr left;
+  NodePtr right;
   Node(const std::string& key, const std::string& val)
       : key(key), value(val), left(nullptr), right(nullptr) {}
 };
 
 class SplayTree {
  private:
-  Node* root_;
+  NodePtr root_;
 
   // Правый поворот
-  static Node* RightRot(Node* node) {
-    Node* node_l = node->left;
+  static NodePtr RightRot(NodePtr node) {
+    NodePtr node_l = node->left;
     node->left = node_l->right;
     node_l->right = node;
     return node_l;
   }
 
   // Левый поворот
-  static Node* LeftRot(Node* node) {
-    Node* node_r = node->right;
+  static NodePtr LeftRot(NodePtr node) {
+    NodePtr node_r = node->right;
     node->right = node_r->left;
     node_r->left = node;
     return node_r;
   }
 
   // Splay: перемещает узел к корню дерева
-  Node* Splay(Node* root, const std::string& key) {
+  NodePtr Splay(NodePtr root, const std::string& key) {
     // Если дерево пусто
     if (root == nullptr || key == root->key) {
       return root;
@@ -99,7 +101,7 @@ class SplayTree {
   ~SplayTree() { FreeNode(root_); }
 
   // Освобождение памяти узла
-  void FreeNode(Node* node) {
+  void FreeNode(NodePtr node) {
     if (node != nullptr) {
       FreeNode(node->left);
       FreeNode(node->right);
@@ -115,8 +117,8 @@ class SplayTree {
       return;
     }
 
-    Node* parent = nullptr;
-    Node* current = root_;
+    NodePtr parent = nullptr;
+    NodePtr current = root_;
 
     // Поиск подходящего места для вставки нового узла
     while (current != nullptr) {
@@ -134,7 +136,7 @@ class SplayTree {
     }
 
     // Создаем новый узел
-    Node* new_node = new Node(key, value);
+    NodePtr new_node = new Node(key, value);
 
     // Вставляем новый узел на нужное место
     if (key < parent->key) {
@@ -157,7 +159,12 @@ class SplayTree {
   }
 };
 
-void Input(size_t count, SplayTree& tree) {
+bool Input(SplayTree& tree) {
+  size_t count;
+  std::cin >> count;
+  if (count == 0) {
+    return false;
+  }
   // Чтение пар
   for (size_t i = 0; i < count; ++i) {
     std::string nickname;
@@ -166,9 +173,13 @@ void Input(size_t count, SplayTree& tree) {
     tree.Insert(nickname, car);
     tree.Insert(car, nickname);
   }
+  return true;
 }
 
-void Requests(size_t reqs, SplayTree& tree, std::vector<std::string>& results) {
+void Requests(SplayTree& tree, std::vector<std::string>& results) {
+  size_t reqs;
+  std::cin >> reqs;
+  std::vector<std::string> results(reqs);
   // Обработка запросов
   for (size_t i = 0; i < reqs; ++i) {
     std::string query;
@@ -180,27 +191,21 @@ void Requests(size_t reqs, SplayTree& tree, std::vector<std::string>& results) {
   }
 }
 
-void Output(std::vector<std::string>& results) {
-  for (std::string& item : results) {
+void Output(const std::vector<std::string>& results) {
+  for (const std::string& item : results) {
     std::cout << item << '\n';
   }
 }
 
 int main() {
-  size_t count;
-  std::cin >> count;
-  if (count == 0) {
+  SplayTree tree;
+  std::vector<std::string> results;
+
+  if (!Input(tree)) {
     return 0;
   }
-  SplayTree tree;
 
-  Input(count, tree);
-
-  size_t reqs;
-  std::cin >> reqs;
-  std::vector<std::string> results(reqs);
-
-  Requests(reqs, tree, results);
+  Requests(tree, results);
 
   Output(results);
 
