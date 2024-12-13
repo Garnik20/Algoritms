@@ -48,7 +48,7 @@ class Treap {
   int32_t Prev(int32_t value) { return Prev(root_, value); }
 
   // Поиск k-го элемента по порядку
-  int32_t Kth(size_t prir) { return Kth(root_, prir); }
+  int32_t Kth(size_t priority) { return Kth(root_, priority); }
 
  private:
   NodePtr root_;
@@ -100,7 +100,7 @@ class Treap {
   }
 
   // Вставка нового элемента в дерево
-  NodePtr Insert(NodePtr node, int value) {
+  NodePtr Insert(NodePtr node, int32_t value) {
     if (Exists(node, value)) {
       return node;
     }
@@ -202,33 +202,33 @@ class Treap {
 
 void Requests(Treap& tree, std::vector<int32_t>& results) {
   std::string op;
-  int32_t x;
-  size_t prir;
+  int32_t element;
+  size_t priority;
   while (std::cin >> op) {
     if (op == "Insert") {
-      std::cin >> x;
-      tree.Insert(x);
+      std::cin >> element;
+      tree.Insert(element);
     } else if (op == "delete") {
-      std::cin >> x;
-      tree.Deletenode(x);
+      std::cin >> element;
+      tree.Deletenode(element);
     } else if (op == "Exists") {
-      std::cin >> x;
-      if (tree.Exists(x)) {
+      std::cin >> element;
+      if (tree.Exists(element)) {
         results.emplace_back(-2);
       } else {
         results.emplace_back(-3);
       }
     } else if (op == "Next") {
-      std::cin >> x;
-      int32_t result = tree.Next(x);
+      std::cin >> element;
+      int32_t result = tree.Next(element);
       results.emplace_back(result);
     } else if (op == "Prev") {
-      std::cin >> x;
-      int32_t result = tree.Prev(x);
+      std::cin >> element;
+      int32_t result = tree.Prev(element);
       results.emplace_back(result);
     } else if (op == "Kth") {
-      std::cin >> prir;
-      int32_t result = tree.Kth(prir);
+      std::cin >> priority;
+      int32_t result = tree.Kth(priority);
       results.emplace_back(result);
     }
   }
