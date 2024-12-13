@@ -27,7 +27,6 @@ std::uniform_int_distribution<int32_t> Node::dist(0, INT32_MAX);
 using NodePtr = Node*;
 
 class Treap {
-  
  public:
   Treap() : root_(nullptr) {}
 
