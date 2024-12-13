@@ -1,169 +1,33 @@
 #include <iostream>
 #include <random>
 
+struct Node {
+  int32_t value;
+  int32_t priority;
+  size_t size;
+  Node* left;
+  Node* right;
+
+  // Генератор случайных чисел (общий для всех узлов)
+  static std::mt19937 gen;
+  static std::uniform_int_distribution<int32_t> dist;
+
+  Node(int32_t val)
+      : value(val),
+        priority(dist(gen)),
+        size(1),
+        left(nullptr),
+        right(nullptr) {}
+};
+
+// Инициализация генератора и распределения
+std::mt19937 Node::gen(std::random_device{}());
+std::uniform_int_distribution<int32_t> Node::dist(0, INT32_MAX);
+
+using NodePtr = Node*;
+
 class Treap {
- private:
-  struct Node {
-    int32_t value;
-    int32_t priority;
-    size_t size;
-    Node* left;
-    Node* right;
-
-    Node(int32_t val)
-        : value(val),
-          priority(rand()),
-          size(1),
-          left(nullptr),
-          right(nullptr) {}
-  };
-
-  Node* root_;
-
-  // Функция для обновления размера поддерева
-  static void UpdateSize(Node* node) {
-    if (node != nullptr) {
-      node->size = 1 + GetSize(node->left) + GetSize(node->right);
-    }
-  }
-
-  // Функция для получения размера поддерева
-  static size_t GetSize(Node* node) { return node != nullptr ? node->size : 0; }
-
-  // Split - разделяет дерево на две части по значению
-  void Split(Node* node, int32_t value, Node*& left, Node*& right) {
-    if (node == nullptr) {
-      left = right = nullptr;
-      return;
-    }
-
-    if (node->value < value) {
-      Split(node->right, value, node->right, right);
-      left = node;
-    } else {
-      Split(node->left, value, left, node->left);
-      right = node;
-    }
-
-    UpdateSize(node);
-  }
-
-  // Merge - сливает два дерева
-  Node* Merge(Node* left, Node* right) {
-    if (left == nullptr || right == nullptr) {
-      return left != nullptr ? left : right;
-    }
-
-    if (left->priority > right->priority) {
-      left->right = Merge(left->right, right);
-      UpdateSize(left);
-      return left;
-    }
-    right->left = Merge(left, right->left);
-    UpdateSize(right);
-    return right;
-  }
-
-  // Вставка нового элемента в дерево
-  Node* Insert(Node* node, int value) {
-    if (Exists(node, value)) {
-      return node;
-    }
-    Node* new_node = new Node(value);
-    Node* left;
-    Node* right;
-    Split(node, value, left, right);
-    left = Merge(left, new_node);
-    return Merge(left, right);
-  }
-
-  // Удаление узла с заданным значением
-  Node* Deletenode(Node* node, int32_t value) {
-    if (node == nullptr) {
-      return nullptr;
-    }
-
-    if (node->value == value) {
-      Node* temp = Merge(node->left, node->right);
-      delete node;
-      return temp;
-    }
-
-    if (value < node->value) {
-      node->left = Deletenode(node->left, value);
-    } else {
-      node->right = Deletenode(node->right, value);
-    }
-
-    UpdateSize(node);
-    return node;
-  }
-
-  // Функция для поиска элемента в дереве
-  bool Exists(Node* node, int32_t value) {
-    if (node == nullptr) {
-      return false;
-    }
-    if (node->value == value) {
-      return true;
-    }
-    if (value < node->value) {
-      return Exists(node->left, value);
-    }
-    return Exists(node->right, value);
-  }
-
-  // Функция для поиска следующего элемента (Next)
-  static int32_t Next(Node* node, int32_t value) {
-    int32_t res = -1;
-    while (node != nullptr) {
-      if (node->value > value) {
-        res = node->value;
-        node = node->left;
-      } else {
-        node = node->right;
-      }
-    }
-    return res;
-  }
-
-  // Функция для поиска предыдущего элемента (Prev)
-  static int32_t Prev(Node* node, int32_t value) {
-    int32_t res = -1;
-    while (node != nullptr) {
-      if (node->value < value) {
-        res = node->value;
-        node = node->right;
-      } else {
-        node = node->left;
-      }
-    }
-    return res;
-  }
-
-  // Функция для поиска k-го элемента по порядку
-  int32_t Kth(Node* node, size_t prir) {
-    if (node == nullptr) {
-      return -1;
-    }
-    size_t left_size = GetSize(node->left);
-    if (prir < left_size) {
-      return Kth(node->left, prir);
-    }
-    if (prir == left_size) {
-      return node->value;
-    }
-    return Kth(node->right, prir - left_size - 1);
-  }
-
-  void FullDell(Node* node) {
-    if (node != nullptr) {
-      FullDell(node->left);
-      FullDell(node->right);
-      delete node;
-    }
-  }
-
+  
  public:
   Treap() : root_(nullptr) {}
 
@@ -186,6 +50,153 @@ class Treap {
 
   // Поиск k-го элемента по порядку
   int32_t Kth(size_t prir) { return Kth(root_, prir); }
+
+ private:
+  NodePtr root_;
+
+  // Функция для обновления размера поддерева
+  static void UpdateSize(NodePtr node) {
+    if (node != nullptr) {
+      node->size = 1 + GetSize(node->left) + GetSize(node->right);
+    }
+  }
+
+  // Функция для получения размера поддерева
+  static size_t GetSize(NodePtr node) { return node != nullptr ? node->size : 0; }
+
+  // Split - разделяет дерево на две части по значению
+  void Split(NodePtr node, int32_t value, NodePtr& left, NodePtr& right) {
+    if (node == nullptr) {
+      left = right = nullptr;
+      return;
+    }
+
+    if (node->value < value) {
+      Split(node->right, value, node->right, right);
+      left = node;
+    } else {
+      Split(node->left, value, left, node->left);
+      right = node;
+    }
+
+    UpdateSize(node);
+  }
+
+  // Merge - сливает два дерева
+  NodePtr Merge(NodePtr left, NodePtr right) {
+    if (left == nullptr || right == nullptr) {
+      return left != nullptr ? left : right;
+    }
+
+    if (left->priority > right->priority) {
+      left->right = Merge(left->right, right);
+      UpdateSize(left);
+      return left;
+    }
+    right->left = Merge(left, right->left);
+    UpdateSize(right);
+    return right;
+  }
+
+  // Вставка нового элемента в дерево
+  NodePtr Insert(NodePtr node, int value) {
+    if (Exists(node, value)) {
+      return node;
+    }
+    NodePtr new_node = new Node(value);
+    NodePtr left;
+    NodePtr right;
+    Split(node, value, left, right);
+    left = Merge(left, new_node);
+    return Merge(left, right);
+  }
+
+  // Удаление узла с заданным значением
+  NodePtr Deletenode(NodePtr node, int32_t value) {
+    if (node == nullptr) {
+      return nullptr;
+    }
+
+    if (node->value == value) {
+      NodePtr temp = Merge(node->left, node->right);
+      delete node;
+      return temp;
+    }
+
+    if (value < node->value) {
+      node->left = Deletenode(node->left, value);
+    } else {
+      node->right = Deletenode(node->right, value);
+    }
+
+    UpdateSize(node);
+    return node;
+  }
+
+  // Функция для поиска элемента в дереве
+  bool Exists(NodePtr node, int32_t value) {
+    if (node == nullptr) {
+      return false;
+    }
+    if (node->value == value) {
+      return true;
+    }
+    if (value < node->value) {
+      return Exists(node->left, value);
+    }
+    return Exists(node->right, value);
+  }
+
+  // Функция для поиска следующего элемента (Next)
+  static int32_t Next(NodePtr node, int32_t value) {
+    int32_t res = -1;
+    while (node != nullptr) {
+      if (node->value > value) {
+        res = node->value;
+        node = node->left;
+      } else {
+        node = node->right;
+      }
+    }
+    return res;
+  }
+
+  // Функция для поиска предыдущего элемента (Prev)
+  static int32_t Prev(NodePtr node, int32_t value) {
+    int32_t res = -1;
+    while (node != nullptr) {
+      if (node->value < value) {
+        res = node->value;
+        node = node->right;
+      } else {
+        node = node->left;
+      }
+    }
+    return res;
+  }
+
+  // Функция для поиска k-го элемента по порядку
+  int32_t Kth(NodePtr node, size_t prir) {
+    if (node == nullptr) {
+      return -1;
+    }
+    size_t left_size = GetSize(node->left);
+    if (prir < left_size) {
+      return Kth(node->left, prir);
+    }
+    if (prir == left_size) {
+      return node->value;
+    }
+    return Kth(node->right, prir - left_size - 1);
+  }
+
+  void FullDell(NodePtr node) {
+    if (node != nullptr) {
+      FullDell(node->left);
+      FullDell(node->right);
+      delete node;
+    }
+  }
 };
 
 void Requests(Treap& tree, std::vector<int32_t>& results) {
