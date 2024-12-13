@@ -62,7 +62,9 @@ class Treap {
   }
 
   // Функция для получения размера поддерева
-  static size_t GetSize(NodePtr node) { return node != nullptr ? node->size : 0; }
+  static size_t GetSize(NodePtr node) {
+    return node != nullptr ? node->size : 0;
+  }
 
   // Split - разделяет дерево на две части по значению
   void Split(NodePtr node, int32_t value, NodePtr& left, NodePtr& right) {
