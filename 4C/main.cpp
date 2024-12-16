@@ -43,8 +43,14 @@ public:
   }
 
   // Сумма в области от (x1, y1, z1) до (x2, y2, z2)
-  int64_t RangeSum(int16_t x1, int16_t y1, int16_t z1, int16_t x2, int16_t y2,
-                   int16_t z2) {
+  int64_t RangeSum() {
+    int16_t x1;
+    int16_t y1;
+    int16_t z1;
+    int16_t x2;
+    int16_t y2;
+    int16_t z2;
+    std::cin >> x1 >> y1 >> z1 >> x2 >> y2 >> z2;
     return PrefixSum(x2, y2, z2) - (x1 > 0 ? PrefixSum(x1 - 1, y2, z2) : 0) -
            (y1 > 0 ? PrefixSum(x2, y1 - 1, z2) : 0) -
            (z1 > 0 ? PrefixSum(x2, y2, z1 - 1) : 0) +
@@ -64,18 +70,11 @@ void Requests(std::vector<int64_t> &result, FenwickTree &fenwicktree) {
       int16_t x_cord;
       int16_t y_cord;
       int16_t z_cord;
-      int64_t k;
-      std::cin >> x_cord >> y_cord >> z_cord >> k;
-      fenwicktree.Update(x_cord, y_cord, z_cord, k);
+      int64_t delim;
+      std::cin >> x_cord >> y_cord >> z_cord >> delim;
+      fenwicktree.Update(x_cord, y_cord, z_cord, delim);
     } else if (req == 2) {
-      int16_t x1;
-      int16_t y1;
-      int16_t z1;
-      int16_t x2;
-      int16_t y2;
-      int16_t z2;
-      std::cin >> x1 >> y1 >> z1 >> x2 >> y2 >> z2;
-      result.emplace_back(fenwicktree.RangeSum(x1, y1, z1, x2, y2, z2));
+      result.emplace_back(fenwicktree.RangeSum());
     } else if (req == 3) {
       break;
     }
