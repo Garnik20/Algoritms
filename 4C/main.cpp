@@ -68,8 +68,8 @@ void Requests(std::vector<int64_t>& result, FenwickTree& fenwicktree) {
 }
 
 void Print(const std::vector<int64_t>& result) {
-  for (const int64_t item : result) {
-    std::cout << item << '\n';
+  for (const int64_t kItem : result) {
+    std::cout << kItem << '\n';
   }
 }
 
