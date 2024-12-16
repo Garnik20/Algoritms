@@ -20,21 +20,25 @@ public:
 
   // Обновление значения delta в точке (x_cord, y_cord, z_cord)
   void Update(int16_t x_cord, int16_t y_cord, int16_t z_cord, int64_t delta) {
-    for (int16_t i = x_cord + 1; i <= cube_size_; i += Lsb(i))
-      for (int16_t j = y_cord + 1; j <= cube_size_; j += Lsb(j))
+    for (int16_t i = x_cord + 1; i <= cube_size_; i += Lsb(i)) {
+      for (int16_t j = y_cord + 1; j <= cube_size_; j += Lsb(j)) {
         for (int16_t k = z_cord + 1; k <= cube_size_; k += Lsb(k)) {
           fenwick_[i][j][k] += delta;
         }
+      }
+    }
   }
 
   // Префиксная сумма от (0, 0, 0) до (x_cord, y_cord, z_cord)
   int64_t PrefixSum(int16_t x_cord, int16_t y_cord, int16_t z_cord) {
     int64_t sum = 0;
-    for (int16_t i = x_cord + 1; i > 0; i -= Lsb(i))
-      for (int16_t j = y_cord + 1; j > 0; j -= Lsb(j))
+    for (int16_t i = x_cord + 1; i > 0; i -= Lsb(i)) {
+      for (int16_t j = y_cord + 1; j > 0; j -= Lsb(j)) {
         for (int16_t k = z_cord + 1; k > 0; k -= Lsb(k)) {
           sum += fenwick_[i][j][k];
         }
+      }
+    }
     return sum;
   }
 
@@ -57,12 +61,19 @@ void Requests(std::vector<int64_t> &result, FenwickTree &fenwicktree) {
     std::cin >> req;
 
     if (req == 1) {
-      int16_t x_cord, y_cord, z_cord;
+      int16_t x_cord;
+      int16_t y_cord;
+      int16_t z_cord;
       int64_t k;
       std::cin >> x_cord >> y_cord >> z_cord >> k;
       fenwicktree.Update(x_cord, y_cord, z_cord, k);
     } else if (req == 2) {
-      int16_t x1, y1, z1, x2, y2, z2;
+      int16_t x1;
+      int16_t y1;
+      int16_t z1;
+      int16_t x2;
+      int16_t y2;
+      int16_t z2;
       std::cin >> x1 >> y1 >> z1 >> x2 >> y2 >> z2;
       result.emplace_back(fenwicktree.RangeSum(x1, y1, z1, x2, y2, z2));
     } else if (req == 3) {
