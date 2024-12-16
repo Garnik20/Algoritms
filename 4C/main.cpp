@@ -2,14 +2,14 @@
 #include <vector>
 
 class FenwickTree {
-private:
+ private:
   int16_t cube_size_;
   std::vector<std::vector<std::vector<int64_t>>> fenwick_;
 
   // Метод для получения младшего установленного бита
   static int16_t Lsb(int16_t x_cord) { return x_cord & -x_cord; }
 
-public:
+ public:
   // Конструктор
   FenwickTree(int16_t size) : cube_size_(size) {
     fenwick_.resize(
@@ -61,7 +61,7 @@ public:
   }
 };
 
-void Requests(std::vector<int64_t> &result, FenwickTree &fenwicktree) {
+void Requests(std::vector<int64_t>& result, FenwickTree& fenwicktree) {
   while (true) {
     int16_t req;
     std::cin >> req;
@@ -81,7 +81,7 @@ void Requests(std::vector<int64_t> &result, FenwickTree &fenwicktree) {
   }
 }
 
-void Print(const std::vector<int64_t> &result) {
+void Print(const std::vector<int64_t>& result) {
   for (const int64_t kItem : result) {
     std::cout << kItem << '\n';
   }
