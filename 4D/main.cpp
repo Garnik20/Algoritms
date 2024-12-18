@@ -4,16 +4,14 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
 class SparseTable {
  private:
-  vector<vector<int>> table_;
-  vector<vector<int>> second_;
-  vector<int> log_;
+  std::vector<std::vector<int>> table_;
+  std::vector<std::vector<int>> second_;
+  std::vector<int> log_;
 
  public:
-  SparseTable(const vector<int>& arr) {
+  SparseTable(const std::vector<int>& arr) {
     int count = arr.size();
     int max_size = log2(count) + 1;
 
@@ -23,8 +21,8 @@ class SparseTable {
       log_[i] = log_[i / 2] + 1;
     }
 
-    table_.resize(max_size, vector<int>(count));
-    second_.resize(max_size, vector<int>(count, INT_MAX));
+    table_.resize(max_size, std::vector<int>(count));
+    second_.resize(max_size, std::vector<int>(count, INT_MAX));
 
     for (int i = 0; i < count; ++i) {
       table_[0][i] = arr[i];
@@ -35,9 +33,9 @@ class SparseTable {
         int left_min = table_[j - 1][i];
         int right_min = table_[j - 1][i + (1 << (j - 1))];
 
-        table_[j][i] = min(left_min, right_min);
+        table_[j][i] = std::min(left_min, right_min);
 
-        vector<int> candidates = {left_min, right_min, second_[j - 1][i],
+        std::vector<int> candidates = {left_min, right_min, second_[j - 1][i],
                                   second_[j - 1][i + (1 << (j - 1))]};
         sort(candidates.begin(), candidates.end());
         candidates.erase(unique(candidates.begin(), candidates.end()),
@@ -55,7 +53,7 @@ class SparseTable {
     int left_min = table_[elem][start];
     int right_min = table_[elem][finish - (1 << elem) + 1];
 
-    vector<int> candidates = {left_min, right_min, second_[elem][start],
+    std::vector<int> candidates = {left_min, right_min, second_[elem][start],
                               second_[elem][finish - (1 << elem) + 1]};
     sort(candidates.begin(), candidates.end());
     candidates.erase(unique(candidates.begin(), candidates.end()),
@@ -65,34 +63,34 @@ class SparseTable {
   }
 };
 
-void Input(vector<int>& arr, vector<pair<int, int>>& requests) {
+void Input(std::vector<int>& arr, std::vector<std::pair<int, int>>& requests) {
   int count;
   int reqs;
-  cin >> count >> reqs;
+  std::cin >> count >> reqs;
   arr.resize(count);
   requests.resize(reqs);
   for (int i = 0; i < count; ++i) {
-    cin >> arr[i];
+    std::cin >> arr[i];
   }
   for (int i = 0; i < reqs; ++i) {
     int start;
     int finish;
-    cin >> start >> finish;
+    std::cin >> start >> finish;
     --start;
     --finish;
     requests[i] = {start, finish};
   }
 }
 
-void Solver(SparseTable& table, vector<pair<int, int>>& requests) {
+void Solver(SparseTable& table, std::vector<std::pair<int, int>>& requests) {
   for (auto item : requests) {
-    cout << table.SecondMin(item.first, item.second) << "\n";
+    std::cout << table.SecondMin(item.first, item.second) << "\n";
   }
 }
 
 int main() {
-  vector<int> arr;
-  vector<pair<int, int>> requests;
+  std::vector<int> arr;
+  std::vector<std::pair<int, int>> requests;
 
   Input(arr, requests);
 
