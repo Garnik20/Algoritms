@@ -91,7 +91,6 @@ void Solver(SparseTable& table, vector<pair<int, int>>& requests) {
 }
 
 int main() {
-  int reqs;
   vector<int> arr;
   vector<pair<int, int>> requests;
 
