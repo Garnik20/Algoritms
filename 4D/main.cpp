@@ -36,7 +36,7 @@ class SparseTable {
         table_[j][i] = std::min(left_min, right_min);
 
         std::vector<int> candidates = {left_min, right_min, second_[j - 1][i],
-                                  second_[j - 1][i + (1 << (j - 1))]};
+                                       second_[j - 1][i + (1 << (j - 1))]};
         sort(candidates.begin(), candidates.end());
         candidates.erase(unique(candidates.begin(), candidates.end()),
                          candidates.end());
@@ -54,7 +54,7 @@ class SparseTable {
     int right_min = table_[elem][finish - (1 << elem) + 1];
 
     std::vector<int> candidates = {left_min, right_min, second_[elem][start],
-                              second_[elem][finish - (1 << elem) + 1]};
+                                   second_[elem][finish - (1 << elem) + 1]};
     sort(candidates.begin(), candidates.end());
     candidates.erase(unique(candidates.begin(), candidates.end()),
                      candidates.end());
