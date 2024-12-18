@@ -35,8 +35,9 @@ class SparseTable {
 
         table_[j][i] = std::min(left_min, right_min);
 
-        std::vector<int32_t> candidates = {left_min, right_min, second_[j - 1][i],
-                                       second_[j - 1][i + (1 << (j - 1))]};
+        std::vector<int32_t> candidates = {left_min, right_min,
+                                           second_[j - 1][i],
+                                           second_[j - 1][i + (1 << (j - 1))]};
         sort(candidates.begin(), candidates.end());
         candidates.erase(unique(candidates.begin(), candidates.end()),
                          candidates.end());
@@ -53,8 +54,9 @@ class SparseTable {
     int32_t left_min = table_[elem][start];
     int32_t right_min = table_[elem][finish - (1 << elem) + 1];
 
-    std::vector<int32_t> candidates = {left_min, right_min, second_[elem][start],
-                                   second_[elem][finish - (1 << elem) + 1]};
+    std::vector<int32_t> candidates = {left_min, right_min,
+                                       second_[elem][start],
+                                       second_[elem][finish - (1 << elem) + 1]};
     sort(candidates.begin(), candidates.end());
     candidates.erase(unique(candidates.begin(), candidates.end()),
                      candidates.end());
@@ -63,7 +65,8 @@ class SparseTable {
   }
 };
 
-void Input(std::vector<int32_t>& arr, std::vector<std::pair<int32_t, int32_t>>& requests) {
+void Input(std::vector<int32_t>& arr,
+           std::vector<std::pair<int32_t, int32_t>>& requests) {
   int32_t count;
   int32_t reqs;
   std::cin >> count >> reqs;
@@ -82,7 +85,8 @@ void Input(std::vector<int32_t>& arr, std::vector<std::pair<int32_t, int32_t>>& 
   }
 }
 
-void Solver(SparseTable& table, std::vector<std::pair<int32_t, int32_t>>& requests) {
+void Solver(SparseTable& table,
+            std::vector<std::pair<int32_t, int32_t>>& requests) {
   for (auto item : requests) {
     std::cout << table.SecondMin(item.first, item.second) << "\n";
   }
