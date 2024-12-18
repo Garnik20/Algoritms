@@ -32,12 +32,12 @@ class SparseTable {
 
     for (int j = 1; j < max_size; ++j) {
       for (int i = 0; i + (1 << j) <= count; ++i) {
-        int leftMin = table_[j - 1][i];
-        int rightMin = table_[j - 1][i + (1 << (j - 1))];
+        int left_min = table_[j - 1][i];
+        int right_min = table_[j - 1][i + (1 << (j - 1))];
 
-        table_[j][i] = min(leftMin, rightMin);
+        table_[j][i] = min(left_min, right_min);
 
-        vector<int> candidates = {leftMin, rightMin, second_[j - 1][i],
+        vector<int> candidates = {left_min, right_min, second_[j - 1][i],
                                   second_[j - 1][i + (1 << (j - 1))]};
         sort(candidates.begin(), candidates.end());
         candidates.erase(unique(candidates.begin(), candidates.end()),
@@ -50,13 +50,13 @@ class SparseTable {
 
   int SecondMin(int start, int finish) {
     int range = finish - start + 1;
-    int j = log_[range];
+    int elem = log_[range];
 
-    int leftMin = table_[j][start];
-    int rightMin = table_[j][finish - (1 << j) + 1];
+    int left_min = table_[elem][start];
+    int right_min = table_[elem][finish - (1 << elem) + 1];
 
-    vector<int> candidates = {leftMin, rightMin, second_[j][start],
-                              second_[j][finish - (1 << j) + 1]};
+    vector<int> candidates = {left_min, right_min, second_[elem][start],
+                              second_[elem][finish - (1 << elem) + 1]};
     sort(candidates.begin(), candidates.end());
     candidates.erase(unique(candidates.begin(), candidates.end()),
                      candidates.end());
@@ -66,7 +66,8 @@ class SparseTable {
 };
 
 void Input(vector<int>& arr, vector<pair<int, int>>& requests) {
-  int count, reqs;
+  int count;
+  int reqs;
   cin >> count >> reqs;
   arr.resize(count);
   requests.resize(reqs);
@@ -74,7 +75,8 @@ void Input(vector<int>& arr, vector<pair<int, int>>& requests) {
     cin >> arr[i];
   }
   for (int i = 0; i < reqs; ++i) {
-    int start, finish;
+    int start;
+    int finish;
     cin >> start >> finish;
     --start;
     --finish;
