@@ -13,7 +13,7 @@ struct Edge {
 
   int GetWeight() const { return weight; }
 
-  bool operator<(const Edge &other) const { return weight < other.weight; }
+  bool operator<(const Edge& other) const { return weight < other.weight; }
 };
 
 // === Graph interface ===
@@ -32,7 +32,7 @@ class EdgeListGraph : public IGraph<VertexType, EdgeType> {
  public:
   EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
-  void AddEdge(const EdgeType &edge) { edges_.push_back(edge); }
+  void AddEdge(const EdgeType& edge) { edges_.push_back(edge); }
 
   size_t GetVertexCount() const override { return vertex_count_; }
 
@@ -47,7 +47,7 @@ class EdgeListGraph : public IGraph<VertexType, EdgeType> {
 
 // === Kruskal's Algorithm ===
 template <typename VertexType, typename EdgeType>
-int64_t Kruskal(const IGraph<VertexType, EdgeType> &graph) {
+int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
 
@@ -82,7 +82,7 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType> &graph) {
   };
 
   int64_t total_weight = 0;
-  for (const auto &edge : edges) {
+  for (const auto& edge : edges) {
     if (find_set(edge.from) != find_set(edge.to)) {
       total_weight += edge.GetWeight();
       union_sets(edge.from, edge.to);
@@ -101,7 +101,7 @@ void Input(EdgeListGraph<VertexType, EdgeType>& graph, size_t edge_count) {
     VertexType v_vert;
     VertexType w_vert;
     std::cin >> u_vert >> v_vert >> w_vert;
-    graph.AddEdge(EdgeType{u_vert - 1, v_vert - 1, w_vert}); // 0-indexed
+    graph.AddEdge(EdgeType{u_vert - 1, v_vert - 1, w_vert});
   }
 }
 
