@@ -64,16 +64,23 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType> &graph) {
     return parent[vert] = find_set(parent[vert]);
   };
 
-  auto union_sets = [&](VertexType a, VertexType b) {
-    a = find_set(a);
-    b = find_set(b);
-    if (a != b) {
-      if (rank[a] < rank[b]) {
-        std::swap(a, b);
+  std::function<VertexType(VertexType)> find_set = [&](VertexType vert) -> VertexType {
+    if (vert == parent[vert]) {
+      return vert;
+    }
+    return parent[vert] = find_set(parent[vert]);
+  };
+
+  auto union_sets = [&](VertexType vert_a, VertexType vert_b) {
+    vert_a = find_set(vert_a);
+    vert_b = find_set(vert_b);
+    if (vert_a != vert_b) {
+      if (rank[vert_a] < rank[vert_b]) {
+        std::swap(vert_a, vert_b);
       }
-      parent[b] = a;
-      if (rank[a] == rank[b]) {
-        rank[a]++;
+      parent[vert_b] = vert_a;
+      if (rank[vert_a] == rank[vert_b]) {
+        rank[vert_a]++;
       }
     }
   };
