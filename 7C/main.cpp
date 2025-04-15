@@ -54,7 +54,7 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
   std::vector<VertexType> parent(graph.GetVertexCount());
   std::vector<int> rank(graph.GetVertexCount(), 0);
 
-  for (VertexType vert = 0; vert < graph.GetVertexCount(); ++vert) {
+  for (size_t vert = 0; vert < graph.GetVertexCount(); ++vert) {
     parent[vert] = vert;
   }
 
