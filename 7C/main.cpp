@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -64,7 +65,9 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType> &graph) {
     return parent[vert] = find_set(parent[vert]);
   };
 
-  std::function<VertexType(VertexType)> find_set = [&](VertexType vert) -> VertexType {
+  std::function<VertexType(VertexType)> find_set;
+
+  find_set = [&](VertexType vert) -> VertexType {
     if (vert == parent[vert]) {
       return vert;
     }
