@@ -5,15 +5,19 @@
 #include <vector>
 
 // === Edge definition ===
-template <typename VertexType>
+template <typename VertexT, typename WeightT = size_t>
 struct Edge {
-  VertexType from;
-  VertexType to;
-  int weight;
+ public:
+  Edge(const VertexT& from, const VertexT& to, WeightT weight = 1)
+      : vertices_(from, to), weight_(weight) {}
 
-  int GetWeight() const { return weight; }
+  const VertexT& GetStart() const { return vertices_.first; }
+  const VertexT& GetTarget() const { return vertices_.second; }
+  WeightT GetWeight() const { return weight_; }
 
-  bool operator<(const Edge& other) const { return weight < other.weight; }
+ private:
+  std::pair<VertexT, VertexT> vertices_;
+  WeightT weight_;
 };
 
 // === Graph interface ===
@@ -83,9 +87,9 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
 
   int64_t total_weight = 0;
   for (const auto& edge : edges) {
-    if (find_set(edge.from) != find_set(edge.to)) {
+    if (find_set(edge.GetStart()) != find_set(edge.to)) {
       total_weight += edge.GetWeight();
-      union_sets(edge.from, edge.to);
+      union_sets(edge.GetStart(), edge.GetTarget());
     }
   }
 
