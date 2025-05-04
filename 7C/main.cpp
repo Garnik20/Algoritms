@@ -87,7 +87,7 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
 
   int64_t total_weight = 0;
   for (const auto& edge : edges) {
-    if (find_set(edge.GetStart()) != find_set(edge.to)) {
+    if (find_set(edge.GetStart()) != find_set(edge.GetTarget())) {
       total_weight += edge.GetWeight();
       union_sets(edge.GetStart(), edge.GetTarget());
     }
