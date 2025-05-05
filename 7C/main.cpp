@@ -8,7 +8,7 @@
 template <typename VertexT, typename WeightT = size_t>
 struct Edge {
  public:
-  Edge(const VertexT& from, const VertexT& to, WeightT weight = 1)
+  Edge( VertexT& from, VertexT& to, WeightT weight = 1)
       : vertices_(from, to), weight_(weight) {}
 
   const VertexT& GetStart() const { return vertices_.first; }
