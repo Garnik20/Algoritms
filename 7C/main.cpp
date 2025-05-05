@@ -17,9 +17,7 @@ struct Edge {
   WeightT GetWeight() const { return weight_; }
 
   // Добавляем оператор сравнения для сортировки
-  bool operator<(const Edge& other) const {
-    return weight_ < other.weight_;
-  }
+  bool operator<(const Edge& other) const { return weight_ < other.weight_; }
 
  private:
   std::pair<VertexT, VertexT> vertices_;
@@ -118,7 +116,7 @@ int main() {
   using Vertex = int32_t;
   using Weight = int64_t;
   using E = Edge<Vertex, Weight>;
-  
+
   size_t count;
   size_t edge_count;
   std::cin >> count >> edge_count;
