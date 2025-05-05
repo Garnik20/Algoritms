@@ -24,32 +24,38 @@ struct Edge {
 
 // === DSU (Disjoint Set Union) ===
 template <typename VertexType>
-class DSU {
+class Dsu {
  public:
-  DSU(size_t size) : parent(size), rank(size, 0) {
+  explicit Dsu(size_t size) : parent_(size), rank_(size, 0) {
     for (size_t i = 0; i < size; ++i) {
-      parent[i] = i;
+      parent_[i] = i;
     }
   }
 
-  VertexType find_set(VertexType v) {
-    if (v == parent[v]) return v;
-    return parent[v] = find_set(parent[v]);
+  VertexType FindSet(VertexType vertex) {
+    if (vertex == parent_[vertex]) {
+      return vertex;
+    }
+    return parent_[vertex] = FindSet(parent_[vertex]);
   }
 
-  void union_sets(VertexType a, VertexType b) {
-    a = find_set(a);
-    b = find_set(b);
-    if (a != b) {
-      if (rank[a] < rank[b]) std::swap(a, b);
-      parent[b] = a;
-      if (rank[a] == rank[b]) ++rank[a];
+  void UnionSets(VertexType first, VertexType second) {
+    first = FindSet(first);
+    second = FindSet(second);
+    if (first != second) {
+      if (rank_[first] < rank_[second]) {
+        std::swap(first, second);
+      }
+      parent_[second] = first;
+      if (rank_[first] == rank_[second]) {
+        ++rank_[first];
+      }
     }
   }
 
  private:
-  std::vector<VertexType> parent;
-  std::vector<int> rank;
+  std::vector<VertexType> parent_;
+  std::vector<int> rank_;
 };
 
 // === Graph interface ===
@@ -62,11 +68,13 @@ class IGraph {
   virtual ~IGraph() = default;
 };
 
-// === Graph implementation (for Kruskal) ===
+// === Graph implementation ===
 template <typename VertexType, typename EdgeType>
 class EdgeListGraph : public IGraph<VertexType, EdgeType> {
  public:
-  EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
+  using EdgeT = EdgeType;  // Добавляем публичный алиас для типа ребра
+
+  explicit EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
   void AddEdge(const EdgeType& edge) { edges_.push_back(edge); }
 
@@ -84,19 +92,19 @@ class EdgeListGraph : public IGraph<VertexType, EdgeType> {
 // === Kruskal's Algorithm ===
 template <typename Graph>
 int64_t Kruskal(const Graph& graph) {
-  using EdgeType = typename Graph::EdgeType;
+  using EdgeType = typename Graph::EdgeT;
   using VertexType = decltype(std::declval<EdgeType>().GetStart());
 
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
 
-  DSU<VertexType> dsu(graph.GetVertexCount());
+  Dsu<VertexType> dsu(graph.GetVertexCount());
   int64_t total_weight = 0;
 
   for (const auto& edge : edges) {
-    if (dsu.find_set(edge.GetStart()) != dsu.find_set(edge.GetTarget())) {
+    if (dsu.FindSet(edge.GetStart()) != dsu.FindSet(edge.GetTarget())) {
       total_weight += edge.GetWeight();
-      dsu.union_sets(edge.GetStart(), edge.GetTarget());
+      dsu.UnionSets(edge.GetStart(), edge.GetTarget());
     }
   }
 
@@ -105,7 +113,7 @@ int64_t Kruskal(const Graph& graph) {
 
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
-  using EdgeType = typename Graph::EdgeType;
+  using EdgeType = typename Graph::EdgeT;
   using VertexType = decltype(std::declval<EdgeType>().GetStart());
   
   for (size_t count = 0; count < edge_count; ++count) {
