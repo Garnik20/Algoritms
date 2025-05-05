@@ -104,8 +104,9 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
 template <typename VertexType, typename EdgeType>
 void Input(EdgeListGraph<VertexType, EdgeType>& graph, size_t edge_count) {
   for (size_t count = 0; count < edge_count; ++count) {
-    VertexType u_vert, v_vert;
-    typename EdgeType::WeightT w_vert;
+    VertexType u_vert;
+    VertexType v_vert;
+    decltype(EdgeType::weight_) w_vert;
     std::cin >> u_vert >> v_vert >> w_vert;
     graph.AddEdge(EdgeType{u_vert - 1, v_vert - 1, w_vert});
   }
