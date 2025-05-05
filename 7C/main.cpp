@@ -8,12 +8,17 @@
 template <typename VertexT, typename WeightT = size_t>
 struct Edge {
  public:
-  Edge( VertexT& from, VertexT& to, WeightT weight = 1)
+  Edge(const VertexT& from, const VertexT& to, WeightT weight = 1)
       : vertices_(from, to), weight_(weight) {}
 
   const VertexT& GetStart() const { return vertices_.first; }
   const VertexT& GetTarget() const { return vertices_.second; }
   WeightT GetWeight() const { return weight_; }
+
+  // Добавляем оператор сравнения для сортировки
+  bool operator<(const Edge& other) const {
+    return weight_ < other.weight_;
+  }
 
  private:
   std::pair<VertexT, VertexT> vertices_;
@@ -99,9 +104,8 @@ int64_t Kruskal(const IGraph<VertexType, EdgeType>& graph) {
 template <typename VertexType, typename EdgeType>
 void Input(EdgeListGraph<VertexType, EdgeType>& graph, size_t edge_count) {
   for (size_t count = 0; count < edge_count; ++count) {
-    VertexType u_vert;
-    VertexType v_vert;
-    VertexType w_vert;
+    VertexType u_vert, v_vert;
+    typename EdgeType::WeightT w_vert;
     std::cin >> u_vert >> v_vert >> w_vert;
     graph.AddEdge(EdgeType{u_vert - 1, v_vert - 1, w_vert});
   }
@@ -110,7 +114,9 @@ void Input(EdgeListGraph<VertexType, EdgeType>& graph, size_t edge_count) {
 // === Main ===
 int main() {
   using Vertex = int32_t;
-  using E = Edge<Vertex>;
+  using Weight = int64_t;
+  using E = Edge<Vertex, Weight>;
+  
   size_t count;
   size_t edge_count;
   std::cin >> count >> edge_count;
