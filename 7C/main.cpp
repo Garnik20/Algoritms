@@ -117,7 +117,7 @@ void Input(Graph& graph, size_t edge_count) {
   using EdgeType = typename Graph::EdgeT;
   using VertexType = typename EdgeType::VertexType;
   using WeightType = typename EdgeType::WeightType;
-  
+
   for (size_t count = 0; count < edge_count; ++count) {
     VertexType u_vert;
     VertexType v_vert;
