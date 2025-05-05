@@ -8,11 +8,11 @@ template <typename VertexT, typename WeightT = size_t>
 struct Edge {
  public:
   using WeightType = WeightT;
-  Edge(const VertexT& from, const VertexT& to, WeightT weight = 1)
+  Edge(VertexT from, VertexT to, WeightT weight = 1)
       : vertices_(from, to), weight_(weight) {}
 
-  const VertexT& GetStart() const { return vertices_.first; }
-  const VertexT& GetTarget() const { return vertices_.second; }
+  VertexT GetStart() const { return vertices_.first; }
+  VertexT GetTarget() const { return vertices_.second; }
   WeightT GetWeight() const { return weight_; }
 
   bool operator<(const Edge& other) const { return weight_ < other.weight_; }
@@ -28,7 +28,7 @@ class Dsu {
  public:
   explicit Dsu(size_t size) : parent_(size), rank_(size, 0) {
     for (size_t i = 0; i < size; ++i) {
-      parent_[i] = i;
+      parent_[i] = static_cast<VertexType>(i);
     }
   }
 
@@ -72,7 +72,7 @@ class IGraph {
 template <typename VertexType, typename EdgeType>
 class EdgeListGraph : public IGraph<VertexType, EdgeType> {
  public:
-  using EdgeT = EdgeType;  // Добавляем публичный алиас для типа ребра
+  using EdgeT = EdgeType;
 
   explicit EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
@@ -93,7 +93,7 @@ class EdgeListGraph : public IGraph<VertexType, EdgeType> {
 template <typename Graph>
 int64_t Kruskal(const Graph& graph) {
   using EdgeType = typename Graph::EdgeT;
-  using VertexType = decltype(std::declval<EdgeType>().GetStart());
+  using VertexType = decltype(EdgeType().GetStart());
 
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
@@ -114,12 +114,13 @@ int64_t Kruskal(const Graph& graph) {
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
   using EdgeType = typename Graph::EdgeT;
-  using VertexType = decltype(std::declval<EdgeType>().GetStart());
+  using VertexType = decltype(EdgeType().GetStart());
+  using WeightType = typename EdgeType::WeightType;
   
   for (size_t count = 0; count < edge_count; ++count) {
     VertexType u_vert;
     VertexType v_vert;
-    typename EdgeType::WeightType w_vert;
+    WeightType w_vert;
     std::cin >> u_vert >> v_vert >> w_vert;
     graph.AddEdge(EdgeType{u_vert - 1, v_vert - 1, w_vert});
   }
