@@ -7,6 +7,7 @@
 template <typename VertexT, typename WeightT = size_t>
 struct Edge {
  public:
+  using VertexType = VertexT;
   using WeightType = WeightT;
   Edge(VertexT from, VertexT to, WeightT weight = 1)
       : vertices_(from, to), weight_(weight) {}
@@ -62,6 +63,8 @@ class Dsu {
 template <typename VertexType, typename EdgeType>
 class IGraph {
  public:
+  using VertexT = VertexType;
+  using EdgeT = EdgeType;
   virtual size_t GetVertexCount() const = 0;
   virtual size_t GetEdgeCount() const = 0;
   virtual std::vector<EdgeType> GetAllEdges() const = 0;
@@ -72,8 +75,6 @@ class IGraph {
 template <typename VertexType, typename EdgeType>
 class EdgeListGraph : public IGraph<VertexType, EdgeType> {
  public:
-  using EdgeT = EdgeType;
-
   explicit EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
   void AddEdge(const EdgeType& edge) { edges_.push_back(edge); }
@@ -93,7 +94,7 @@ class EdgeListGraph : public IGraph<VertexType, EdgeType> {
 template <typename Graph>
 int64_t Kruskal(const Graph& graph) {
   using EdgeType = typename Graph::EdgeT;
-  using VertexType = decltype(EdgeType().GetStart());
+  using VertexType = typename Graph::VertexT;
 
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
@@ -114,7 +115,7 @@ int64_t Kruskal(const Graph& graph) {
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
   using EdgeType = typename Graph::EdgeT;
-  using VertexType = decltype(EdgeType().GetStart());
+  using VertexType = typename EdgeType::VertexType;
   using WeightType = typename EdgeType::WeightType;
   
   for (size_t count = 0; count < edge_count; ++count) {
