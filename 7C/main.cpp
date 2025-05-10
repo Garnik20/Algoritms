@@ -116,6 +116,12 @@ int64_t Kruskal(const Graph& graph) {
   return total_weight;
 }
 
+using Vertex = int32_t;
+using Weight = int64_t;
+template <typename T>
+using EdgeT = Edge<T, size_t>;
+using Graph = EdgeListGraph<Vertex, EdgeT>;
+
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
   using EdgeType = typename Graph::EdgeT;
@@ -133,12 +139,6 @@ void Input(Graph& graph, size_t edge_count) {
 
 // === Main ===
 int main() {
-  using Vertex = int32_t;
-  using Weight = int64_t;
-  template <typename T>
-  using EdgeTemplate = Edge<T, Weight>;
-  using Graph = EdgeListGraph<Vertex, EdgeTemplate>;
-
   size_t count;
   size_t edge_count;
   std::cin >> count >> edge_count;
