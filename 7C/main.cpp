@@ -60,35 +60,38 @@ class Dsu {
 };
 
 // === Graph interface ===
-template <typename VertexType, typename EdgeType>
+template <typename VertexType, template <typename> class EdgeTemplate>
 class IGraph {
  public:
   using VertexT = VertexType;
-  using EdgeT = EdgeType;
-  using WeightT = typename EdgeType::WeightType;
+  using EdgeT = EdgeTemplate<VertexType>;
+  using WeightT = typename EdgeT::WeightType;
+
   virtual size_t GetVertexCount() const = 0;
   virtual size_t GetEdgeCount() const = 0;
-  virtual std::vector<EdgeType> GetAllEdges() const = 0;
+  virtual std::vector<EdgeT> GetAllEdges() const = 0;
   virtual ~IGraph() = default;
 };
 
 // === Graph implementation ===
-template <typename VertexType, typename EdgeType>
-class EdgeListGraph : public IGraph<VertexType, EdgeType> {
+template <typename VertexType, template <typename> class EdgeTemplate>
+class EdgeListGraph : public IGraph<VertexType, EdgeTemplate> {
  public:
+  using EdgeT = typename IGraph<VertexType, EdgeTemplate>::EdgeT;
+
   explicit EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
-  void AddEdge(const EdgeType& edge) { edges_.push_back(edge); }
+  void AddEdge(const EdgeT& edge) { edges_.push_back(edge); }
 
   size_t GetVertexCount() const override { return vertex_count_; }
 
   size_t GetEdgeCount() const override { return edges_.size(); }
 
-  std::vector<EdgeType> GetAllEdges() const override { return edges_; }
+  std::vector<EdgeT> GetAllEdges() const override { return edges_; }
 
  private:
   size_t vertex_count_;
-  std::vector<EdgeType> edges_;
+  std::vector<EdgeT> edges_;
 };
 
 // === Kruskal's Algorithm ===
@@ -132,8 +135,9 @@ void Input(Graph& graph, size_t edge_count) {
 int main() {
   using Vertex = int32_t;
   using Weight = int64_t;
-  using E = Edge<Vertex, Weight>;
-  using Graph = EdgeListGraph<Vertex, E>;
+  template <typename T>
+  using EdgeTemplate = Edge<T, Weight>;
+  using Graph = EdgeListGraph<Vertex, EdgeTemplate>;
 
   size_t count;
   size_t edge_count;
