@@ -65,6 +65,7 @@ class IGraph {
  public:
   using VertexT = VertexType;
   using EdgeT = EdgeType;
+  using WeightT = typename EdgeType::WeightType;
   virtual size_t GetVertexCount() const = 0;
   virtual size_t GetEdgeCount() const = 0;
   virtual std::vector<EdgeType> GetAllEdges() const = 0;
@@ -95,6 +96,7 @@ template <typename Graph>
 int64_t Kruskal(const Graph& graph) {
   using EdgeType = typename Graph::EdgeT;
   using VertexType = typename Graph::VertexT;
+  using WeightType = typename Graph::WeightT;
 
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
@@ -116,7 +118,7 @@ template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
   using EdgeType = typename Graph::EdgeT;
   using VertexType = typename EdgeType::VertexType;
-  using WeightType = typename EdgeType::WeightType;
+  using WeightType = typename Graph::WeightT;
 
   for (size_t count = 0; count < edge_count; ++count) {
     VertexType u_vert;
