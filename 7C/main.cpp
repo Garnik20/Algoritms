@@ -96,7 +96,6 @@ template <typename Graph>
 int64_t Kruskal(const Graph& graph) {
   using EdgeType = typename Graph::EdgeT;
   using VertexType = typename Graph::VertexT;
-  using WeightType = typename Graph::WeightT;
 
   std::vector<EdgeType> edges = graph.GetAllEdges();
   std::sort(edges.begin(), edges.end());
