@@ -119,7 +119,7 @@ int64_t Kruskal(const Graph& graph) {
 using Vertex = int32_t;
 using Weight = int64_t;
 template <typename T>
-using EdgeT = Edge<T, size_t>;
+using EdgeT = Edge<T, Weight>;
 using Graph = EdgeListGraph<Vertex, EdgeT>;
 
 template <typename Graph>
