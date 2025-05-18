@@ -66,7 +66,7 @@ class IGraph {
  public:
   using VertexT = VertexType;
   using EdgeT = EdgeTemplate<VertexType, WeightType>;
-  using WeightT = WeightType
+  using WeightT = WeightType;
 
   virtual size_t GetVertexCount() const = 0;
   virtual size_t GetEdgeCount() const = 0;
@@ -122,7 +122,7 @@ using Vertex = int32_t;
 using Weight = int64_t;
 template <typename T>
 using EdgeT = Edge<T, Weight>;
-using Graph = EdgeListGraph<Vertex, Edge, WeightT>;
+using Graph = EdgeListGraph<Vertex, Edge, Weight>;
 
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
