@@ -60,12 +60,13 @@ class Dsu {
 };
 
 // === Graph interface ===
-template <typename VertexType, template <typename> class EdgeTemplate>
+template <typename VertexType, template <typename, typename> class EdgeTemplate,
+          typename WeightType>
 class IGraph {
  public:
   using VertexT = VertexType;
-  using EdgeT = EdgeTemplate<VertexType>;
-  using WeightT = typename EdgeT::WeightType;
+  using EdgeT = EdgeTemplate<VertexType, WeightType>;
+  using WeightT = WeightType
 
   virtual size_t GetVertexCount() const = 0;
   virtual size_t GetEdgeCount() const = 0;
@@ -74,10 +75,11 @@ class IGraph {
 };
 
 // === Graph implementation ===
-template <typename VertexType, template <typename> class EdgeTemplate>
-class EdgeListGraph : public IGraph<VertexType, EdgeTemplate> {
+template <typename VertexType, template <typename, typename> class EdgeTemplate
+          typename WeightT>
+class EdgeListGraph : public IGraph<VertexType, EdgeTemplate, WeightT> {
  public:
-  using EdgeT = typename IGraph<VertexType, EdgeTemplate>::EdgeT;
+  using EdgeT = typename IGraph<VertexType, EdgeTemplate, WeightT>::EdgeT;
 
   explicit EdgeListGraph(size_t vertex_count) : vertex_count_(vertex_count) {}
 
@@ -120,7 +122,7 @@ using Vertex = int32_t;
 using Weight = int64_t;
 template <typename T>
 using EdgeT = Edge<T, Weight>;
-using Graph = EdgeListGraph<Vertex, EdgeT>;
+using Graph = EdgeListGraph<Vertex, Edge, WeightT>;
 
 template <typename Graph>
 void Input(Graph& graph, size_t edge_count) {
