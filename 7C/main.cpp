@@ -75,7 +75,7 @@ class IGraph {
 };
 
 // === Graph implementation ===
-template <typename VertexType, template <typename, typename> class EdgeTemplate
+template <typename VertexType, template <typename, typename> class EdgeTemplate,
           typename WeightT>
 class EdgeListGraph : public IGraph<VertexType, EdgeTemplate, WeightT> {
  public:
